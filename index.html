@@ -3,462 +3,1963 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Biophilic Office — 3-Color SVG Line Drawing</title>
+  <title>AI Webモーション辞典 24 — 動きの名前＆サンプルプロンプト集</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
-    .c-ink   { stroke: #2A303C; }
-    .c-blue  { stroke: #2B5B8E; }
-    .c-green { stroke: #3D7A4A; }
+    /* Motion-specific keyframes & utilities (no :root overrides) */
+    .demo-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .demo-scroll::-webkit-scrollbar-track { background: transparent; }
+    .demo-scroll::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.35); border-radius: 9999px; }
 
-    svg#scene path,
-    svg#scene line,
-    svg#scene circle,
-    svg#scene ellipse,
-    svg#scene rect,
-    svg#scene polyline {
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    /* 1. Hover Lift */
+    .demo-lift-card {
+      transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms ease;
+    }
+    .demo-lift-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.22);
+    }
+    .demo-lift-card:hover .demo-lift-arrow {
+      transform: translateX(2px);
     }
 
-    .w-bold { stroke-width: 2.2; }
-    .w-main { stroke-width: 1.7; }
-    .w-med  { stroke-width: 1.3; }
-    .w-thin { stroke-width: 0.95; }
-    .w-fine { stroke-width: 0.7; opacity: 0.72; }
-
-    svg#scene.filter-ink   .c-blue,
-    svg#scene.filter-ink   .c-green,
-    svg#scene.filter-blue  .c-ink,
-    svg#scene.filter-blue  .c-green,
-    svg#scene.filter-green .c-ink,
-    svg#scene.filter-green .c-blue {
-      opacity: 0.1 !important;
-      transition: opacity 0.25s ease;
+    /* 2. Animated Underline */
+    .demo-underline-link {
+      position: relative;
+      padding-bottom: 4px;
     }
+    .demo-underline-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2.5px;
+      border-radius: 9999px;
+      background: #14b8a6;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .demo-underline-link:hover::after,
+    .demo-underline-link:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    /* 3. Tooltip */
+    .demo-tooltip-wrap .demo-tooltip-box {
+      opacity: 0;
+      transform: translate(-50%, 6px) scale(0.96);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .demo-tooltip-wrap:hover .demo-tooltip-box,
+    .demo-tooltip-wrap:focus-within .demo-tooltip-box {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    /* 4. Dropdown */
+    .demo-dropdown-panel {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .demo-dropdown-panel.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* 5. Accordion */
+    .demo-acc-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .demo-acc-body.open {
+      grid-template-rows: 1fr;
+    }
+    .demo-acc-body > div {
+      overflow: hidden;
+    }
+
+    /* 7. Scroll Reveal */
+    .demo-reveal-item {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 480ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .demo-reveal-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 11. Marquee */
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .demo-marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 12s linear infinite;
+    }
+    .demo-marquee-track.slow {
+      animation-duration: 16s;
+      animation-direction: reverse;
+    }
+    .demo-marquee-wrap:hover .demo-marquee-track {
+      animation-play-state: paused;
+    }
+
+    /* 12. Typewriter cursor */
+    @keyframes blinkCaret {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .demo-caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.05em;
+      background: #14b8a6;
+      vertical-align: -0.15em;
+      margin-left: 2px;
+      animation: blinkCaret 0.9s infinite;
+    }
+
+    /* 16. Text Reveal */
+    .demo-text-reveal-line {
+      display: inline-block;
+      transform: translateY(115%);
+      opacity: 0;
+      transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1), opacity 420ms ease;
+    }
+    .demo-text-reveal-line.shown {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .demo-text-reveal-bar {
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1) 280ms;
+    }
+    .demo-text-reveal-bar.shown {
+      transform: scaleX(1);
+    }
+
+    /* 18. SVG Line Draw */
+    .demo-svg-fill {
+      opacity: 0;
+      transition: opacity 320ms ease;
+    }
+    .demo-svg-fill.shown {
+      opacity: 1;
+    }
+
+    /* 23. Page Transition */
+    .demo-curtain {
+      transform: translateY(105%);
+      transition: transform 340ms cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .demo-curtain.cover {
+      transform: translateY(0%);
+    }
+    .demo-curtain.leave {
+      transform: translateY(-105%);
+    }
+
+    /* 24. Aurora Background */
+    @keyframes auroraFloat1 {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(28px, -16px) scale(1.16); }
+    }
+    @keyframes auroraFloat2 {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(-26px, 18px) scale(1.12); }
+    }
+    @keyframes auroraFloat3 {
+      0%, 100% { transform: translate(0px, 0px) scale(1.04); }
+      50% { transform: translate(16px, 20px) scale(0.92); }
+    }
+    .aurora-blob-1 { animation: auroraFloat1 7s ease-in-out infinite; }
+    .aurora-blob-2 { animation: auroraFloat2 9s ease-in-out infinite; }
+    .aurora-blob-3 { animation: auroraFloat3 11s ease-in-out infinite; }
   </style>
 </head>
-<body class="bg-transparent text-[var(--foreground)] antialiased p-0 m-0">
-  <div class="w-full max-w-[600px] mx-auto py-1 space-y-2">
-    <div class="w-full aspect-[1024/683] rounded-lg overflow-hidden border border-[var(--card-border)] bg-[#FCFBF8]">
-      <svg id="scene" viewBox="0 0 1024 683" class="w-full h-full block" xmlns="http://www.w3.org/2000/svg" aria-label="オフィス空間の3色線画イラスト">
-        <!-- STAGE 1: 建築フレーム・窓 -->
-        <g data-stage="1" data-label="建築フレーム・窓">
-          <rect class="c-ink w-fine" x="2" y="2" width="1020" height="679" />
-          <path class="c-ink w-main" d="M 0,50 L 365,196" />
-          <path class="c-ink w-main" d="M 365,196 L 806,196" />
-          <path class="c-ink w-med"  d="M 365,342 L 806,342" />
-          <line class="c-ink w-med" x1="365" y1="196" x2="365" y2="342" />
-          <line class="c-ink w-med" x1="442" y1="196" x2="442" y2="342" />
-          <line class="c-ink w-med" x1="524" y1="196" x2="524" y2="294" />
-          <line class="c-ink w-med" x1="604" y1="196" x2="604" y2="294" />
-          <line class="c-ink w-med" x1="684" y1="196" x2="684" y2="342" />
-          <line class="c-ink w-med" x1="764" y1="196" x2="764" y2="294" />
-          <line class="c-ink w-fine" x1="365" y1="216" x2="806" y2="216" />
-          <line class="c-ink w-fine" x1="365" y1="236" x2="806" y2="236" />
-          <line class="c-ink w-fine" x1="365" y1="256" x2="806" y2="256" />
-          <line class="c-ink w-fine" x1="365" y1="276" x2="806" y2="276" />
-          <line class="c-ink w-fine" x1="365" y1="296" x2="482" y2="296" />
-          <line class="c-ink w-fine" x1="365" y1="318" x2="482" y2="318" />
-          <path class="c-ink w-bold" d="M 806,174 L 806,440" />
-          <path class="c-ink w-main" d="M 806,174 L 876,158 L 1024,158" />
-          <path class="c-ink w-med"  d="M 876,158 L 876,412" />
-          <ellipse class="c-ink w-med" cx="834" cy="217" rx="8.5" ry="16" />
-          <path class="c-ink w-thin" d="M 834,217 L 834,207 M 834,217 L 839,221" />
-          <path class="c-ink w-thin" d="M 912,338 L 912,214 L 1000,214 L 1000,338" />
-          <line class="c-ink w-fine" x1="715" y1="0" x2="578" y2="196" />
-          <line class="c-ink w-fine" x1="895" y1="0" x2="645" y2="196" />
-          <line class="c-ink w-fine" x1="1024" y1="52" x2="725" y2="196" />
-          <line class="c-ink w-fine" x1="642" y1="65" x2="1024" y2="65" />
-          <line class="c-ink w-fine" x1="598" y1="108" x2="1024" y2="108" />
-          <line class="c-ink w-fine" x1="520" y1="146" x2="910" y2="146" />
-          <path class="c-ink w-thin" d="M 568,98 L 682,98 L 664,116 L 558,116 Z" />
-          <path class="c-ink w-thin" d="M 544,148 L 622,148 L 608,159 L 538,159 Z" />
-          <path class="c-ink w-thin" d="M 896,105 L 1006,105 L 992,116 L 886,116 Z" />
-          <path class="c-ink w-thin" d="M 218,104 L 336,104 L 348,116 L 234,116 Z" />
-        </g>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased min-h-screen m-0 p-0">
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-500/15 text-teal-600 dark:text-teal-400 font-bold text-sm">24</span>
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight">AIでWebサイトを作る時に使う、動きの名前24</h1>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)] mt-0.5">
+            実際の動きを触って確認しながら、生成AIにそのまま投げられる名称・プロンプトをコピーできる参照アプリ
+          </p>
+        </div>
 
-        <!-- STAGE 2: 青い波の天井 -->
-        <g data-stage="2" data-label="青い波の天井">
-          <path class="c-blue w-bold" d="M 630,0 C 658,48 640,94 568,122 C 492,149 456,162 490,176 C 530,192 675,193 806,192" />
-          <path class="c-blue w-thin" d="M 624,0 C 651,46 633,90 562,117 C 484,145 446,161 482,178 C 524,195 668,196 806,195" />
-          <path class="c-blue w-main" d="M 0,48 L 365,194 L 806,194" />
-          <line class="c-blue w-med"  x1="15"  y1="0" x2="395" y2="194" />
-          <line class="c-blue w-med"  x1="215" y1="0" x2="438" y2="194" />
-          <line class="c-blue w-med"  x1="414" y1="0" x2="482" y2="194" />
-          <line class="c-blue w-med"  x1="608" y1="0" x2="554" y2="127" />
-          <line class="c-blue w-thin" x1="0"   y1="16"  x2="637" y2="16" />
-          <line class="c-blue w-thin" x1="42"  y1="64"  x2="640" y2="64" />
-          <line class="c-blue w-thin" x1="138" y1="103" x2="606" y2="103" />
-          <line class="c-blue w-thin" x1="216" y1="133" x2="538" y2="133" />
-          <line class="c-blue w-thin" x1="274" y1="157" x2="474" y2="157" />
-          <line class="c-blue w-thin" x1="322" y1="176" x2="488" y2="176" />
-        </g>
+        <div class="flex items-center gap-2">
+          <button id="openCombinerBtn" type="button"
+            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold border border-[var(--border)] bg-[var(--card)] hover:border-teal-500/60 transition cursor-pointer">
+            <span>組み合わせプロンプト</span>
+            <span id="selectedCountBadge" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-teal-600 text-white text-xs font-bold">0</span>
+          </button>
+        </div>
+      </div>
 
-        <!-- STAGE 3: 集中ブース・床の曲線 -->
-        <g data-stage="3" data-label="集中ブース・床の曲線">
-          <path class="c-blue w-main" d="M 484,380 L 484,296 C 484,295 486,294 490,294 L 534,294 C 548,294 556,304 556,318 L 556,414 L 494,414" />
-          <path class="c-blue w-thin" d="M 484,300 L 530,300 C 542,300 549,308 549,320 L 549,414" />
-          <line class="c-blue w-thin" x1="510" y1="300" x2="510" y2="380" />
-          <path class="c-blue w-main" d="M 604,294 L 660,294 C 676,294 686,304 686,320 L 686,338" />
-          <path class="c-blue w-thin" d="M 604,300 L 656,300 C 670,300 679,308 679,322 L 679,338" />
-          <path class="c-blue w-main" d="M 722,340 L 722,294 L 806,294" />
-          <path class="c-blue w-main" d="M 722,300 L 756,300 L 756,412 L 732,412" />
-          <line class="c-blue w-thin" x1="756" y1="300" x2="806" y2="300" />
-          <path class="c-blue w-med"  d="M 484,522 C 542,562 595,612 634,683" />
-          <path class="c-blue w-fine" d="M 526,442 C 538,496 588,538 648,568" />
-          <path class="c-blue w-fine" d="M 744,548 C 778,595 802,642 818,683" />
-        </g>
+      <!-- Search + Level + Category Filters -->
+      <div class="flex flex-col lg:flex-row lg:items-center gap-2.5">
+        <div class="relative flex-1 max-w-md">
+          <input id="searchInput" type="search" placeholder="動きの名前・英語名・用途で検索（例: スクロール, hover, FAQ）"
+            class="w-full pl-9 pr-3 py-2 rounded-lg text-xs bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+          <svg class="w-4 h-4 text-[var(--muted-foreground)] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3.5-3.5"></path>
+          </svg>
+        </div>
 
-        <!-- STAGE 4: 曲面カウンター・家具 -->
-        <g data-stage="4" data-label="曲面カウンター・家具">
-          <path class="c-ink w-bold" d="M 0,668 C 185,634 395,574 464,504 C 504,464 504,428 456,404" />
-          <path class="c-ink w-main" d="M 0,679 C 188,646 398,586 468,515 C 501,481 504,452 490,432" />
-          <path class="c-ink w-med"  d="M 352,412 C 378,404 404,400 425,400" />
-          <path class="c-ink w-fine" d="M 28,625 C 195,595 365,542 435,482" />
-          <path class="c-ink w-fine" d="M 105,576 C 245,546 368,498 412,452" />
-          <path class="c-ink w-med"  d="M 258,618 L 246,683" />
-          <path class="c-ink w-med"  d="M 352,585 L 352,683" />
-          <path class="c-ink w-med"  d="M 432,542 L 432,612" />
-          <path class="c-ink w-bold" d="M 0,532 C 138,520 284,488 340,452 C 362,438 362,422 346,408" />
-          <path class="c-ink w-main" d="M 0,562 C 144,548 290,514 346,476 C 361,465 361,452 357,438" />
-          <rect class="c-ink w-thin" x="12" y="538" width="46" height="14" rx="2" />
-          <path class="c-ink w-thin" d="M 294,482 L 318,472 L 318,482 L 294,492 Z" />
-          <path class="c-ink w-med"  d="M 288,362 C 338,354 378,342 388,332" />
-          <path class="c-ink w-med"  d="M 296,380 C 344,370 382,356 392,344" />
-          <path class="c-ink w-med"  d="M 308,396 C 352,386 385,372 394,360" />
-          <path class="c-ink w-thin" d="M 326,410 C 362,400 388,388 395,376" />
-          <path class="c-ink w-med"  d="M 388,332 C 394,344 396,364 394,380" />
-          <path class="c-ink w-med"  d="M 450,348 C 438,346 410,347 404,353 C 400,358 426,361 446,359" />
-          <line class="c-ink w-med"  x1="432" y1="360" x2="432" y2="394" />
-          <ellipse class="c-ink w-bold" cx="450" cy="612" rx="46" ry="20" />
-          <path class="c-ink w-bold" d="M 456,593 C 482,586 502,574 508,560 C 512,554 506,554 498,562 C 482,576 468,596 462,625" />
-          <line class="c-ink w-bold" x1="406" y1="618" x2="395" y2="683" />
-          <line class="c-ink w-bold" x1="462" y1="632" x2="458" y2="683" />
-          <line class="c-ink w-bold" x1="494" y1="618" x2="504" y2="683" />
-          <line class="c-ink w-med"  x1="418" y1="634" x2="414" y2="683" />
-          <path class="c-ink w-main" d="M 476,496 C 492,502 518,500 526,490 C 530,484 520,478 504,478" />
-          <path class="c-ink w-main" d="M 505,478 C 508,464 514,452 522,452 C 530,452 532,464 526,486" />
-          <line class="c-ink w-main" x1="518" y1="496" x2="529" y2="632" />
-          <line class="c-ink w-main" x1="494" y1="500" x2="496" y2="622" />
-          <path class="c-ink w-med"  d="M 476,586 C 494,592 516,590 526,582" />
-        </g>
+        <div class="flex flex-wrap items-center gap-1.5" id="levelFilters">
+          <button data-level="all" class="level-pill px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition">すべて (24)</button>
+          <button data-level="basic" class="level-pill px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition">基本の12</button>
+          <button data-level="pro" class="level-pill px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition">プロっぽい12</button>
+        </div>
+      </div>
 
-        <!-- STAGE 5: スタンディングデスク・右デスク -->
-        <g data-stage="5" data-label="スタンディング・右デスク">
-          <ellipse class="c-ink w-bold" cx="669" cy="350" rx="79" ry="13.5" />
-          <path class="c-ink w-med"  d="M 590,350 L 590,356 C 590,363 626,368 669,368 C 712,368 748,363 748,356 L 748,350" />
-          <path class="c-ink w-main" d="M 610,364 L 610,472 L 626,486 L 672,486" />
-          <line class="c-ink w-med"  x1="626" y1="366" x2="626" y2="486" />
-          <line class="c-ink w-med"  x1="734" y1="362" x2="734" y2="442" />
-          <path class="c-ink w-bold" d="M 1024,606 C 920,572 798,530 755,496 C 734,478 742,458 784,445 C 808,438 830,436 852,438" />
-          <path class="c-ink w-main" d="M 1024,616 C 918,582 796,539 754,504 C 742,494 740,484 744,476" />
-          <path class="c-ink w-fine" d="M 1010,572 C 915,542 820,506 785,480" />
-          <path class="c-ink w-med"  d="M 858,554 L 858,596 L 882,604" />
-          <path class="c-ink w-med"  d="M 885,568 L 885,642 L 908,664 L 948,664 L 948,592" />
-          <line class="c-ink w-med"  x1="908" y1="576" x2="908" y2="664" />
-          <path class="c-ink w-main" d="M 884,484 C 918,506 968,522 1024,530" />
-          <path class="c-ink w-med"  d="M 884,484 L 884,496 C 918,518 968,534 1024,542" />
-          <path class="c-ink w-bold" d="M 842,380 L 892,404 L 892,468 L 842,436 Z" />
-          <path class="c-ink w-med"  d="M 862,450 L 868,488" />
-          <ellipse class="c-ink w-med" cx="866" cy="490" rx="14" ry="4" />
-          <path class="c-ink w-bold" d="M 952,414 L 1024,418 L 1024,488 L 952,482 Z" />
-          <path class="c-ink w-main" d="M 952,482 L 948,494 L 990,536" />
-          <ellipse class="c-ink w-med" cx="990" cy="538" rx="14" ry="4" />
-          <path class="c-ink w-med"  d="M 760,446 L 754,404 C 753,394 768,388 784,390 C 800,392 808,398 806,412 L 802,442" />
-          <path class="c-ink w-thin" d="M 756,396 C 750,382 770,376 788,378 C 804,380 812,388 808,398" />
-          <path class="c-ink w-bold" d="M 1024,544 L 996,544 C 988,544 988,554 990,568 L 1004,648 L 1024,648" />
-          <path class="c-ink w-main" d="M 998,552 L 1024,552" />
-          <path class="c-ink w-main" d="M 996,626 L 966,608 C 958,604 952,610 956,618 L 982,648 L 992,683" />
-        </g>
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 demo-scroll" id="categoryFilters">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </header>
 
-        <!-- STAGE 6: ペンダントライト -->
-        <g data-stage="6" data-label="ペンダントライト">
-          <path class="c-ink w-bold" d="M 69,18 L 93,18 L 91,54 L 71,54 Z" />
-          <line class="c-ink w-main" x1="81" y1="54" x2="81" y2="233" />
-          <path class="c-ink w-med"  d="M 75,233 L 87,233 L 91,240 L 71,240 Z" />
-          <circle class="c-ink w-bold" cx="81" cy="274" r="38" />
-          <ellipse class="c-ink w-med" cx="81" cy="274" rx="40" ry="6" />
-          <ellipse class="c-ink w-thin" cx="81" cy="274" rx="16" ry="38" />
-          <circle class="c-ink w-thin" cx="81" cy="264" r="8" />
-          <circle class="c-ink w-thin" cx="81" cy="285" r="7" />
-          <path class="c-ink w-main" d="M 225,44 L 245,44 L 243,76 L 227,76 Z" />
-          <line class="c-ink w-med"  x1="235" y1="76" x2="235" y2="237" />
-          <path class="c-ink w-med"  d="M 230,237 L 240,237 L 243,243 L 227,243 Z" />
-          <circle class="c-ink w-main" cx="235" cy="271" r="32" />
-          <ellipse class="c-ink w-med" cx="235" cy="271" rx="34" ry="5" />
-          <ellipse class="c-ink w-thin" cx="235" cy="271" rx="13" ry="32" />
-          <circle class="c-ink w-thin" cx="235" cy="263" r="6.5" />
-          <circle class="c-ink w-thin" cx="235" cy="281" r="6" />
-          <path class="c-ink w-med"  d="M 323,74 L 339,74 L 337,100 L 325,100 Z" />
-          <line class="c-ink w-med"  x1="331" y1="100" x2="331" y2="238" />
-          <circle class="c-ink w-main" cx="331" cy="266" r="26" />
-          <ellipse class="c-ink w-thin" cx="331" cy="266" rx="28" ry="4.5" />
-          <ellipse class="c-ink w-thin" cx="331" cy="266" rx="10" ry="26" />
-          <path class="c-ink w-med"  d="M 343,98 L 355,98 L 354,120 L 344,120 Z" />
-          <line class="c-ink w-thin" x1="349" y1="120" x2="349" y2="242" />
-          <path class="c-ink w-med"  d="M 353,246 A 21,21 0 1,1 353,284" />
-          <line class="c-ink w-thin" x1="355" y1="265" x2="372" y2="265" />
-        </g>
-
-        <!-- STAGE 7: バイオフィリック植物 -->
-        <g data-stage="7" data-label="バイオフィリック植物">
-          <path class="c-green w-main" d="M 118,412 C 98,324 56,258 0,218" />
-          <path class="c-green w-med"  d="M 98,354 C 74,344 50,348 28,362 M 84,318 C 58,308 34,312 12,324 M 66,286 C 42,274 20,276 2,288 M 44,256 C 24,244 10,244 0,250" />
-          <path class="c-green w-med"  d="M 102,340 C 118,320 132,302 142,284 M 88,304 C 102,282 114,262 120,242 M 70,272 C 82,250 90,232 94,212 M 48,242 C 56,222 60,204 62,188" />
-          <path class="c-green w-main" d="M 130,418 C 142,320 162,245 198,176" />
-          <path class="c-green w-med"  d="M 148,332 C 122,314 102,292 86,268 M 160,286 C 138,266 122,244 110,218 M 176,240 C 156,222 144,202 136,182" />
-          <path class="c-green w-med"  d="M 152,324 C 178,308 202,292 224,274 M 166,278 C 192,260 214,244 238,224 M 182,232 C 206,216 226,204 252,194" />
-          <path class="c-green w-med"  d="M 198,176 C 192,164 200,156 206,168 C 216,162 222,172 208,180" />
-          <path class="c-green w-med"  d="M 136,182 C 126,174 130,164 140,172 C 148,166 154,174 142,184" />
-          <path class="c-green w-med"  d="M 252,194 C 264,186 270,194 258,204 C 266,210 258,218 248,208" />
-          <path class="c-green w-thin" d="M 110,218 C 100,208 106,198 116,208 M 224,274 C 236,264 244,270 232,282" />
-          <path class="c-green w-bold" d="M 24,522 C 20,470 50,420 94,394 C 104,436 84,488 46,520 Z" />
-          <path class="c-green w-thin" d="M 38,518 C 52,474 72,438 92,400" />
-          <path class="c-green w-bold" d="M 96,512 C 106,460 132,418 164,392 C 172,436 154,480 124,510 Z" />
-          <path class="c-green w-thin" d="M 110,508 C 126,464 144,428 162,398" />
-          <path class="c-green w-med"  d="M 62,482 C 54,442 66,406 88,382 M 138,478 C 144,442 158,412 178,388" />
-          <path class="c-green w-main" d="M 0,432 C 18,412 36,374 28,354 C 14,344 0,362 0,392" />
-          <path class="c-green w-thin" d="M 4,404 L 22,392 M 6,386 L 24,374 M 8,370 L 22,362" />
-          <path class="c-green w-main" d="M 172,494 C 204,458 240,424 276,396" />
-          <path class="c-green w-med"  d="M 196,472 C 194,448 202,428 214,412 M 224,448 C 226,426 236,408 248,392 M 248,426 C 254,406 266,392 278,380" />
-          <path class="c-green w-med"  d="M 202,470 C 226,466 248,460 270,450 M 232,444 C 256,438 278,430 298,418" />
-          <path class="c-green w-main" d="M 232,374 C 224,338 242,306 270,298 C 282,326 270,358 246,376 Z" />
-          <path class="c-green w-thin" d="M 240,372 C 252,344 262,322 268,304" />
-          <path class="c-green w-main" d="M 274,458 C 304,442 332,418 342,396 C 320,390 292,406 272,434 Z" />
-          <path class="c-green w-thin" d="M 278,452 C 302,436 322,418 336,400" />
-          <path class="c-green w-med"  d="M 152,442 C 166,412 184,386 204,368 M 176,434 C 192,406 212,384 232,370" />
-          <path class="c-green w-med"  d="M 6,518 C 20,502 42,504 58,518 C 78,496 106,496 128,506 C 154,484 186,478 216,486 C 244,462 280,456 312,456 C 334,438 352,422 346,402" />
-          <path class="c-green w-main" d="M 276,348 C 296,326 322,308 350,292 C 368,282 384,274 394,260" />
-          <path class="c-green w-med"  d="M 284,344 C 282,320 294,298 310,282 M 316,334 C 320,308 334,284 352,266 M 346,324 C 354,298 368,274 384,254" />
-          <path class="c-green w-med"  d="M 282,348 C 316,340 356,328 386,314" />
-          <path class="c-green w-main" d="M 946,488 C 942,410 946,332 940,256 C 938,236 936,218 934,204" />
-          <path class="c-green w-main" d="M 944,442 C 918,396 894,352 868,312" />
-          <path class="c-green w-main" d="M 944,398 C 966,356 992,318 1020,286" />
-          <path class="c-green w-med"  d="M 942,320 C 906,294 872,272 838,256" />
-          <path class="c-green w-med"  d="M 942,282 C 964,258 986,238 1012,224" />
-          <path class="c-green w-med"  d="M 886,478 C 874,450 886,422 912,412 C 924,436 916,466 896,482 Z" />
-          <path class="c-green w-thin" d="M 894,476 C 900,454 906,434 912,416" />
-          <path class="c-green w-med"  d="M 918,452 C 900,420 912,386 942,378 C 958,404 948,438 926,456 Z" />
-          <path class="c-green w-thin" d="M 924,450 C 932,424 938,400 942,382" />
-          <path class="c-green w-med"  d="M 956,426 C 962,394 988,374 1016,378 C 1016,406 996,428 968,432 Z" />
-          <path class="c-green w-thin" d="M 964,426 C 982,408 998,394 1012,382" />
-          <path class="c-green w-med"  d="M 874,368 C 858,346 870,324 894,322 C 906,342 896,364 878,372 Z" />
-          <path class="c-green w-med"  d="M 914,344 C 904,318 920,296 946,298 C 956,320 942,342 920,348 Z" />
-          <path class="c-green w-med"  d="M 962,332 C 974,306 998,296 1020,308 C 1012,332 990,342 968,338 Z" />
-          <path class="c-green w-thin" d="M 846,260 C 836,250 848,242 862,254 M 880,262 C 874,248 890,244 900,258 M 914,238 C 908,224 924,218 932,234 M 946,216 C 944,202 958,202 960,218 M 976,246 C 978,232 994,232 992,248" />
-          <path class="c-green w-thin" d="M 896,296 C 884,284 898,274 912,286 M 956,268 C 966,254 982,254 982,270 M 856,304 C 844,294 854,284 868,294" />
-          <path class="c-green w-med"  d="M 888,480 C 908,468 934,474 952,492 C 976,482 1002,488 1022,506" />
-        </g>
-
-        <!-- STAGE 8: 働く人々 -->
-        <g data-stage="8" data-label="働く人々">
-          <path class="c-ink w-bold" d="M 378,400 L 418,415 L 424,438 L 385,425 Z" />
-          <path class="c-ink w-main" d="M 424,438 L 456,431 L 444,424" />
-          <path class="c-ink w-bold" d="M 454,344 C 454,328 466,320 478,324 C 488,328 492,342 490,364 C 488,378 486,390 482,398" />
-          <path class="c-ink w-main" d="M 454,344 C 452,360 454,376 462,384 C 470,384 476,374 476,360" />
-          <path class="c-ink w-thin" d="M 482,334 C 484,352 482,374 476,392" />
-          <path class="c-ink w-bold" d="M 452,374 C 440,384 432,398 424,414 L 434,420" />
-          <path class="c-ink w-bold" d="M 488,374 C 498,382 504,398 498,424 C 492,438 474,434 452,428 L 436,422" />
-          <path class="c-ink w-thin" d="M 462,384 L 470,404 L 480,384" />
-          <path class="c-ink w-med"  d="M 498,424 L 498,452" />
-          <path class="c-ink w-med"  d="M 464,518 L 460,578 M 482,504 L 478,574" />
-          <path class="c-ink w-bold" d="M 584,294 C 584,282 596,278 602,286 C 606,292 604,304 596,306 C 588,306 584,300 584,294 Z" />
-          <path class="c-ink w-bold" d="M 584,306 C 574,310 572,324 574,346 L 574,374 L 604,374 L 604,342" />
-          <path class="c-ink w-main" d="M 582,322 C 594,332 610,336 626,336" />
-          <path class="c-ink w-bold" d="M 622,342 L 642,342 L 654,324" />
-          <path class="c-ink w-bold" d="M 576,374 L 574,446 L 588,448 L 592,402 L 596,442 L 608,442 L 604,374" />
-          <path class="c-ink w-main" d="M 574,446 C 572,454 584,458 594,456 M 596,442 C 598,449 608,452 614,448" />
-          <path class="c-ink w-bold" d="M 634,424 C 632,412 644,410 652,424 C 660,446 664,484 662,516 L 648,516 C 646,486 642,452 634,424 Z" />
-          <path class="c-ink w-med"  d="M 634,424 C 624,418 620,406 628,402 C 636,398 642,408 644,416" />
-          <path class="c-ink w-bold" d="M 648,504 L 692,504 C 698,504 698,510 690,512 L 656,512" />
-          <path class="c-ink w-bold" d="M 652,534 L 728,546" />
-          <path class="c-ink w-main" d="M 684,544 L 684,580" />
-          <path class="c-ink w-bold" d="M 684,578 L 626,590 M 684,578 L 664,606 M 684,578 L 716,600 M 684,578 L 728,578" />
-          <circle class="c-ink w-med" cx="626" cy="596" r="4.5" />
-          <circle class="c-ink w-med" cx="664" cy="612" r="4.5" />
-          <circle class="c-ink w-med" cx="716" cy="606" r="4.5" />
-          <path class="c-ink w-bold" d="M 702,404 C 700,384 716,374 730,382 C 740,388 740,404 734,416 C 728,424 718,426 710,422" />
-          <path class="c-ink w-med"  d="M 722,398 L 737,398" />
-          <path class="c-ink w-bold" d="M 706,414 C 684,422 668,444 666,478 C 665,500 672,516 688,524 L 748,528" />
-          <path class="c-ink w-bold" d="M 718,422 C 726,442 730,456 746,464 L 774,470" />
-          <path class="c-ink w-main" d="M 690,456 C 704,474 720,484 744,484 L 768,484" />
-          <path class="c-ink w-thin" d="M 710,424 L 724,462" />
-          <path class="c-ink w-bold" d="M 756,492 L 796,498 L 808,456" />
-          <path class="c-ink w-med"  d="M 756,492 L 772,478 L 798,484" />
-          <path class="c-ink w-bold" d="M 748,512 C 768,518 776,530 770,554 L 752,606 L 722,604 L 738,548 L 692,538" />
-          <path class="c-ink w-bold" d="M 722,604 C 718,616 742,626 766,630 C 774,630 776,622 764,614 L 752,606" />
-          <path class="c-ink w-med"  d="M 754,592 C 766,598 778,602 786,600" />
-        </g>
-      </svg>
+  <!-- Main Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div class="flex items-center justify-between mb-4 text-xs text-[var(--muted-foreground)]">
+      <span id="resultCount">24件の動きを表示中</span>
+      <span>各プレビュー枠内でホバー・クリック・スクロールして動きを体感できます</span>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
-      <div class="flex items-center gap-1.5">
-        <button id="btnReplay" class="px-2.5 py-1 rounded bg-[#2B5B8E] text-white font-medium hover:opacity-90 transition cursor-pointer">もう一度描く</button>
-        <button id="btnPause" class="px-2 py-1 rounded border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:opacity-85 transition cursor-pointer">一時停止</button>
-        <button id="btnInstant" class="px-2 py-1 rounded border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:opacity-85 transition cursor-pointer">完成</button>
-      </div>
+    <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+      <!-- Cards rendered by JS -->
+    </div>
 
-      <div class="flex items-center gap-2 text-[var(--muted-foreground)]">
-        <div class="w-16 h-1.5 rounded-full bg-[var(--border)] overflow-hidden">
-          <div id="progressFill" class="h-full w-0 bg-[#2B5B8E]"></div>
+    <div id="emptyState" class="hidden py-16 text-center space-y-2">
+      <p class="text-sm font-semibold">該当する動きが見つかりませんでした</p>
+      <p class="text-xs text-[var(--muted-foreground)]">検索キーワードやカテゴリフィルタをリセットしてみてください。</p>
+      <button id="resetFiltersBtn" type="button" class="mt-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 text-white hover:bg-teal-500 cursor-pointer">フィルタをリセット</button>
+    </div>
+  </main>
+
+  <!-- Detail & Prompt Customizer Modal -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-2xl">
+      <div class="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 border-b border-[var(--border)] bg-[var(--card)]">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="modalNum" class="text-xs font-mono px-2 py-0.5 rounded bg-teal-500/15 text-teal-600 dark:text-teal-400 font-semibold"></span>
+          <h2 id="modalTitle" class="text-base font-bold truncate"></h2>
+          <span id="modalEn" class="text-xs font-mono text-teal-600 dark:text-teal-400 truncate"></span>
         </div>
-        <span id="stageLabel" class="min-w-[110px]">準備中...</span>
+        <button id="closeDetailModal" type="button" class="p-1.5 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--background)] cursor-pointer" aria-label="閉じる">✕</button>
       </div>
+      <div class="p-5 space-y-5">
+        <p id="modalDesc" class="text-xs text-[var(--muted-foreground)]"></p>
 
-      <div class="flex items-center gap-1.5" title="クリックで色ごとに強調表示">
-        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="ink"><span class="w-2 h-2 rounded-full bg-[#2A303C]"></span>墨</button>
-        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="blue"><span class="w-2 h-2 rounded-full bg-[#2B5B8E]"></span>青</button>
-        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="green"><span class="w-2 h-2 rounded-full bg-[#3D7A4A]"></span>緑</button>
+        <!-- Prompt Customizer -->
+        <div class="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold">プロンプトをカスタマイズ</span>
+            <div class="flex items-center gap-1.5 text-xs">
+              <span class="text-[var(--muted-foreground)]">演出の強さ:</span>
+              <button data-intensity="subtle" class="intensity-btn px-2.5 py-1 rounded-md border border-[var(--border)] cursor-pointer">控えめ</button>
+              <button data-intensity="standard" class="intensity-btn px-2.5 py-1 rounded-md border border-[var(--border)] cursor-pointer">標準</button>
+              <button data-intensity="dynamic" class="intensity-btn px-2.5 py-1 rounded-md border border-[var(--border)] cursor-pointer">リッチ</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <label class="block space-y-1">
+              <span class="text-xs text-[var(--muted-foreground)]">適用したい要素（書き換え可）</span>
+              <input id="customTargetInput" type="text"
+                class="w-full px-3 py-1.5 rounded-lg text-xs bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-teal-500/40" />
+            </label>
+            <label class="block space-y-1">
+              <span class="text-xs text-[var(--muted-foreground)]">技術指定（任意）</span>
+              <select id="customStackSelect"
+                class="w-full px-3 py-1.5 rounded-lg text-xs bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-teal-500/40">
+                <option value="HTML/CSS/JavaScript（外部ライブラリなし）">HTML / CSS / JS（ライブラリなし）</option>
+                <option value="Tailwind CSS + Vanilla JS">Tailwind CSS + Vanilla JS</option>
+                <option value="React + Framer Motion">React + Framer Motion</option>
+                <option value="GSAP（ScrollTrigger含む）">GSAP（ScrollTrigger含む）</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-teal-600 dark:text-teal-400">生成AI向けサンプルプロンプト</span>
+              <button id="copyCustomPromptBtn" type="button"
+                class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 text-white hover:bg-teal-500 transition cursor-pointer">
+                プロンプトをコピー
+              </button>
+            </div>
+            <textarea id="customPromptOutput" rows="5"
+              class="w-full p-3 rounded-lg text-xs font-mono leading-relaxed bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-teal-500/40"></textarea>
+          </div>
+        </div>
+
+        <!-- AI Tips -->
+        <div class="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 space-y-2">
+          <div class="text-xs font-bold">AIに伝えるときのコツ・キーワード</div>
+          <p id="modalTips" class="text-xs text-[var(--muted-foreground)] leading-relaxed"></p>
+          <div id="modalKeywords" class="flex flex-wrap gap-1.5 pt-1"></div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Multi-Motion Prompt Combiner Modal -->
+  <div id="combinerModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+    <div class="w-full max-w-2xl max-h-[88vh] overflow-y-auto rounded-2xl bg-[var(--card)] border border-[var(--border)] shadow-2xl">
+      <div class="sticky top-0 z-10 flex items-center justify-between px-5 py-3.5 border-b border-[var(--border)] bg-[var(--card)]">
+        <div>
+          <h2 class="text-base font-bold">組み合わせプロンプト生成</h2>
+          <p class="text-xs text-[var(--muted-foreground)]">選択した動きをまとめて1つのWebサイト制作指示プロンプトにします</p>
+        </div>
+        <button id="closeCombinerModal" type="button" class="p-1.5 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--background)] cursor-pointer">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div id="selectedChips" class="flex flex-wrap gap-1.5"></div>
+        <label class="block space-y-1">
+          <span class="text-xs text-[var(--muted-foreground)]">作りたいサイトのテーマ</span>
+          <input id="siteThemeInput" type="text" value="ワークスペース予約サービスのランディングページ"
+            class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)]" />
+        </label>
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-teal-600 dark:text-teal-400">一括プロンプト</span>
+            <div class="flex items-center gap-2">
+              <button id="clearSelectionBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs border border-[var(--border)] hover:bg-[var(--background)] cursor-pointer">選択をクリア</button>
+              <button id="copyCombinedBtn" type="button" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 text-white hover:bg-teal-500 cursor-pointer">一括コピー</button>
+            </div>
+          </div>
+          <textarea id="combinedPromptOutput" rows="10"
+            class="w-full p-3 rounded-lg text-xs font-mono leading-relaxed bg-[var(--background)] border border-[var(--border)] text-[var(--foreground)]"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl bg-teal-600 text-white text-xs font-semibold shadow-lg opacity-0 translate-y-2 pointer-events-none transition-all duration-200">
+    コピーしました！
+  </div>
+
   <script>
-    (function () {
-      const svg = document.getElementById('scene');
-      const stageGroups = Array.from(svg.querySelectorAll('g[data-stage]'));
-      const btnReplay = document.getElementById('btnReplay');
-      const btnPause = document.getElementById('btnPause');
-      const btnInstant = document.getElementById('btnInstant');
-      const stageLabel = document.getElementById('stageLabel');
-      const progressFill = document.getElementById('progressFill');
-      const swatches = Array.from(document.querySelectorAll('.swatch'));
+    const CATEGORIES = [
+      { id: "all", label: "すべて" },
+      { id: "hover", label: "1. カーソルを乗せる", level: "basic" },
+      { id: "click", label: "2. 押して開く", level: "basic" },
+      { id: "scroll", label: "3. スクロールすると", level: "basic" },
+      { id: "textnum", label: "4. 文字と数字", level: "basic" },
+      { id: "scrollshow", label: "5. スクロールで見せる", level: "pro" },
+      { id: "draw", label: "6. 文字と線で描く", level: "pro" },
+      { id: "cursor", label: "7. カーソルで見せる", level: "pro" },
+      { id: "finish", label: "8. つなぐ・仕上げる", level: "pro" }
+    ];
 
-      let isPaused = false;
-      let animStartTime = 0;
-      let elapsedBeforePause = 0;
-      let totalDuration = 0;
-      let rafId = null;
-      let items = [];
+    const MOTIONS = [
+      // --- 1/2 基本の12 ---
+      {
+        id: 1,
+        level: "basic",
+        category: "hover",
+        categoryLabel: "1. カーソルを乗せる",
+        nameJa: "ホバーリフト",
+        nameEn: "hover lift",
+        desc: "乗せるとカードが浮く。押せる合図に",
+        hint: "カードにカーソルを乗せて確認",
+        defaultTarget: "人気席・商品一覧のカード要素",
+        prompt: "カードにホバーリフト（hover lift）を実装してください。カーソルを乗せるとカードが上に4〜6pxほど滑らかに浮き上がり、影がやわらかく広がるようにして、クリックできることが直感的に伝わるようにしてください。",
+        tips: "浮き上がる距離（translateY(-4px〜-8px)）と影の変化（box-shadow）をセットで指定すると自然です。イージングは ease-out または cubic-bezier(0.22, 1, 0.36, 1) が心地よく止まります。",
+        keywords: ["hover lift", "translateY", "box-shadow", "cubic-bezier"]
+      },
+      {
+        id: 2,
+        level: "basic",
+        category: "hover",
+        categoryLabel: "1. カーソルを乗せる",
+        nameJa: "下線が伸びる",
+        nameEn: "animated underline",
+        desc: "リンクの下線が、左からすっと伸びる",
+        hint: "ナビゲーション文字にホバー",
+        defaultTarget: "ヘッダーのナビゲーションリンク",
+        prompt: "ナビゲーションリンクに、ホバー時に下線が左から右へすっと伸びるアニメーション（animated underline）をつけてください。::after疑似要素とscaleX(0)→scaleX(1)を使い、transform-origin: leftで滑らかに伸縮させてください。",
+        tips: "border-bottomを直接変えるより、::after疑似要素＋transform: scaleX() を使うとレイアウトがガタつかずGPUで滑らかに動きます。",
+        keywords: ["animated underline", "::after", "scaleX", "transform-origin: left"]
+      },
+      {
+        id: 3,
+        level: "basic",
+        category: "hover",
+        categoryLabel: "1. カーソルを乗せる",
+        nameJa: "ツールチップ",
+        nameEn: "tooltip",
+        desc: "乗せると小さな吹き出し。補足に",
+        hint: "「?」アイコンにホバー",
+        defaultTarget: "料金横の「?」ヘルプアイコン",
+        prompt: "「?」アイコンにカーソルを乗せる（またはフォーカスする）と、補足説明の小さな吹き出しが表示されるツールチップ（tooltip）を実装してください。フェードインと同時に数px上へふわっと出る動きにしてください。",
+        tips: "キーボード操作にも対応するため :hover だけでなく :focus-within も併記すると親切です。画面端ではみ出さない配置指定も有効です。",
+        keywords: ["tooltip", "popover", "hover / focus-within", "fade + translateY"]
+      },
+      {
+        id: 4,
+        level: "basic",
+        category: "click",
+        categoryLabel: "2. 押して開く",
+        nameJa: "ドロップダウン",
+        nameEn: "dropdown menu",
+        desc: "押すと、メニューが下に開く",
+        hint: "「エリア」ボタンを押して開閉",
+        defaultTarget: "エリア絞り込みセレクトメニュー",
+        prompt: "ボタンをクリックすると選択肢リストが下に滑らかに開くドロップダウンメニュー（dropdown menu）を実装してください。開閉に合わせて矢印アイコンが回転し、項目選択や外側クリックで閉じるようにしてください。",
+        tips: "opacity と translateY(-6px)→0 を組み合わせると軽快な開閉感が出ます。aria-expanded の切り替えも指定するとアクセシビリティが高まります。",
+        keywords: ["dropdown menu", "toggle", "outside click", "aria-expanded"]
+      },
+      {
+        id: 5,
+        level: "basic",
+        category: "click",
+        categoryLabel: "2. 押して開く",
+        nameJa: "アコーディオン",
+        nameEn: "accordion",
+        desc: "押すと下に開く。よくある質問に",
+        hint: "質問をクリックして開閉",
+        defaultTarget: "よくある質問（FAQ）セクション",
+        prompt: "よくある質問（FAQ）向けにアコーディオン（accordion）を実装してください。質問行をクリックすると回答が滑らかに展開・折りたたみされ、右端の「+」アイコンが「×」に回転するようにしてください。",
+        tips: "CSS Grid の grid-template-rows: 0fr → 1fr を使うと、中身の高さが可変でもスムーズに開閉アニメーションできます。",
+        keywords: ["accordion", "FAQ", "grid-template-rows", "smooth collapse"]
+      },
+      {
+        id: 6,
+        level: "basic",
+        category: "click",
+        categoryLabel: "2. 押して開く",
+        nameJa: "モーダル",
+        nameEn: "modal",
+        desc: "中央に窓が出て、うしろが暗くなる",
+        hint: "ボタンを押してモーダルを表示",
+        defaultTarget: "予約確認ダイアログ",
+        prompt: "ボタンを押すと画面中央に確認ダイアログが浮かび上がり、背景が半透明の暗幕（backdrop）で暗くなるモーダル（modal）を実装してください。表示時はフェード＋軽いスケールアップ、閉じるボタン・背景クリック・Escキーで閉じられるようにしてください。",
+        tips: "backdrop-filter: blur() を少し足すとモダンな印象になります。表示中は背面スクロールを止めると実用的です。",
+        keywords: ["modal", "dialog", "backdrop blur", "scale + fade"]
+      },
+      {
+        id: 7,
+        level: "basic",
+        category: "scroll",
+        categoryLabel: "3. スクロールすると",
+        nameJa: "スクロールリビール",
+        nameEn: "scroll reveal",
+        desc: "画面に入ると、ふわっと出る",
+        hint: "枠内を下にスクロール（または再生）",
+        defaultTarget: "特徴・事例カード一覧",
+        prompt: "スクロールして画面内に入った要素が下からふわっとフェードインするスクロールリビール（scroll reveal）を実装してください。IntersectionObserverを使い、複数カードは0.1秒ずつ時間差（stagger）で順番に現れるようにしてください。",
+        tips: "「一度表示されたらそのまま維持（once: true）」と指定すると、上下スクロール時にチカチカせず上品に仕上がります。",
+        keywords: ["scroll reveal", "IntersectionObserver", "stagger", "fade-up"]
+      },
+      {
+        id: 8,
+        level: "basic",
+        category: "scroll",
+        categoryLabel: "3. スクロールすると",
+        nameJa: "スティッキーヘッダー",
+        nameEn: "sticky header",
+        desc: "スクロールしても、上に貼りつく",
+        hint: "枠内を下にスクロールして確認",
+        defaultTarget: "グローバルナビゲーションバー",
+        prompt: "ページを下にスクロールしても画面上部に固定され続けるスティッキーヘッダー（sticky header）を実装してください。position: sticky; top: 0 を使い、スクロール開始後に背景のすりガラス効果と薄い影が付くようにしてください。",
+        tips: "「スクロール量に応じて背景の透明度や影を切り替える」と一言添えると、ヒーロー画像との馴染みが格段に良くなります。",
+        keywords: ["sticky header", "position: sticky", "backdrop-filter", "scroll shadow"]
+      },
+      {
+        id: 9,
+        level: "basic",
+        category: "scroll",
+        categoryLabel: "3. スクロールすると",
+        nameJa: "スムーズスクロール",
+        nameEn: "smooth scroll",
+        desc: "目次を押すと、するっとその場所へ",
+        hint: "「トップ / 料金 / アクセス」をクリック",
+        defaultTarget: "ページ内目次・ヘッダーアンカーリンク",
+        prompt: "目次やヘッダーのリンクを押すと該当セクションへ滑らかに移動するスムーズスクロール（smooth scroll）を実装してください。固定ヘッダーに隠れないよう scroll-margin-top も設定し、現在表示中のメニューをハイライトしてください。",
+        tips: "scroll-behavior: smooth に加えて scroll-margin-top を指定しておくと、見出しが固定ヘッダーの下に潜り込む事故を防げます。",
+        keywords: ["smooth scroll", "scroll-behavior: smooth", "scroll-margin-top", "anchor link"]
+      },
+      {
+        id: 10,
+        level: "basic",
+        category: "textnum",
+        categoryLabel: "4. 文字と数字",
+        nameJa: "カウントアップ",
+        nameEn: "count-up",
+        desc: "数字が駆け上がる。実績の数字に",
+        hint: "「再生」ボタンでカウントアップ確認",
+        defaultTarget: "導入実績・評価スコアのKPIセクション",
+        prompt: "実績の数字（例：1,280席、98%、4.8★）が画面に入ったタイミングで0から目標値まで駆け上がるカウントアップ（count-up）アニメーションを実装してください。ease-outで最後がゆっくり止まり、桁区切りカンマや小数点も綺麗にフォーマットしてください。",
+        tips: "数字が横揺れしないよう font-variant-numeric: tabular-nums（等幅数字）を指定するのがプロの仕上げです。",
+        keywords: ["count-up", "requestAnimationFrame", "ease-out", "tabular-nums"]
+      },
+      {
+        id: 11,
+        level: "basic",
+        category: "textnum",
+        categoryLabel: "4. 文字と数字",
+        nameJa: "マーキー",
+        nameEn: "marquee",
+        desc: "横に流れ続ける。ロゴや声の帯に",
+        hint: "ホバーすると一時停止します",
+        defaultTarget: "導入企業ロゴ帯・お客様の声カード帯",
+        prompt: "導入企業ロゴやレビューカードが横に途切れなく流れ続ける無限マーキー（marquee）を実装してください。要素を複製してシームレスにループさせ、左右端をフェードマスクし、ホバー時に一時停止するようにしてください。",
+        tips: "「シームレスループ」「ホバーで一時停止（animation-play-state: paused）」「両端のグラデーションマスク」の3点を伝えると綺麗に作れます。",
+        keywords: ["marquee", "infinite loop", "pause on hover", "edge fade mask"]
+      },
+      {
+        id: 12,
+        level: "basic",
+        category: "textnum",
+        categoryLabel: "4. 文字と数字",
+        nameJa: "タイプライター",
+        nameEn: "typewriter effect",
+        desc: "1文字ずつ打たれる。見出しやAIの返事に",
+        hint: "「再生」ボタンでタイピング確認",
+        defaultTarget: "ファーストビューのキャッチコピー",
+        prompt: "見出しテキストが1文字ずつ打ち込まれるタイプライター効果（typewriter effect）を実装してください。末尾に点滅するキャレット（縦棒カーソル）を表示し、自然なリズムで入力されるようにしてください。",
+        tips: "日本語テキストは文字幅が揃っているので JS で1文字ずつ追加する方式が最も安定します。複数フレーズを順に打ち直すアレンジも可能です。",
+        keywords: ["typewriter effect", "blinking caret", "character by character", "hero heading"]
+      },
 
-      function buildTimeline() {
-        items = [];
-        let cursor = 0.15;
-        stageGroups.forEach((group) => {
-          const label = group.getAttribute('data-label') || '';
-          const shapes = Array.from(group.querySelectorAll('path, line, circle, ellipse, rect, polyline'));
-          const stageStart = cursor;
-          let stageEnd = stageStart;
+      // --- 2/2 プロっぽい12 ---
+      {
+        id: 13,
+        level: "pro",
+        category: "scrollshow",
+        categoryLabel: "5. スクロールで見せる",
+        nameJa: "パララックス",
+        nameEn: "parallax scrolling",
+        desc: "奥と手前がちがう速さで動く",
+        hint: "枠内を上下にスクロールして奥行きを体感",
+        defaultTarget: "ヒーローセクションの背景写真と前景カード",
+        prompt: "スクロールに合わせて背景レイヤーと手前のカード・バッジが異なる速度で動くパララックス（parallax scrolling）を実装してください。奥の背景はゆっくり、手前の要素はやや速く動かして自然な奥行き感を演出してください。",
+        tips: "移動量を大きくしすぎると酔いやすいため、背景はスクロール量の0.3〜0.5倍程度に抑えると洗練されます。transform: translate3d() を使うと滑らかです。",
+        keywords: ["parallax scrolling", "multi-layer depth", "scroll speed ratio", "translate3d"]
+      },
+      {
+        id: 14,
+        level: "pro",
+        category: "scrollshow",
+        categoryLabel: "5. スクロールで見せる",
+        nameJa: "スクロールテリング",
+        nameEn: "scrollytelling",
+        desc: "読み進めると、横のグラフや絵が替わる",
+        hint: "左の文章をスクロールすると右のグラフが変化",
+        defaultTarget: "成長ストーリー＋データグラフの2カラムセクション",
+        prompt: "左カラムのテキストステップを読み進める（スクロールする）と、右カラムに固定表示されたグラフやビジュアルが連動して切り替わるスクロールテリング（scrollytelling）を実装してください。",
+        tips: "右カラムに position: sticky を使い、左の各ステップの交差（IntersectionObserver）で右側の状態を切り替える構造を指定すると安定します。",
+        keywords: ["scrollytelling", "sticky visual", "step-driven chart", "IntersectionObserver"]
+      },
+      {
+        id: 15,
+        level: "pro",
+        category: "scrollshow",
+        categoryLabel: "5. スクロールで見せる",
+        nameJa: "カードスタック",
+        nameEn: "stacking cards",
+        desc: "次のカードがせり上がって重なる",
+        hint: "枠内を下にスクロールして重なりを確認",
+        defaultTarget: "ご利用ステップ（1→2→3）紹介カード",
+        prompt: "スクロールすると次のカードが下からせり上がり、前のカードの上に順番に重なっていくカードスタック（stacking cards）を実装してください。各カードに少しずつ top のオフセット差をつけて、重なりが見えるようにしてください。",
+        tips: "各カードに position: sticky と段階的な top 値（例: 12px, 24px, 36px）を設定するだけで、軽量かつ綺麗なスタック表現が作れます。",
+        keywords: ["stacking cards", "sticky stack", "layered scroll", "step cards"]
+      },
+      {
+        id: 16,
+        level: "pro",
+        category: "draw",
+        categoryLabel: "6. 文字と線で描く",
+        nameJa: "テキストリビール",
+        nameEn: "text reveal",
+        desc: "文字が1行ずつ、下からせり上がる",
+        hint: "「再生」ボタンで1行ずつの出現を確認",
+        defaultTarget: "ブランドメッセージの大見出し",
+        prompt: "大見出しの文字が1行ずつマスク（overflow: hidden）の下からすっとせり上がってくるテキストリビール（text reveal）を実装してください。行ごとに0.12秒ほど時間差をつけ、最後にアクセントラインが左から伸びるようにしてください。",
+        tips: "単純なフェードインよりも「overflow: hidden の箱の下（translateY(110%)）からせり上がる」と指定することで、雑誌やブランドサイトのようなキレが出ます。",
+        keywords: ["text reveal", "line mask", "overflow: hidden", "staggered slide-up"]
+      },
+      {
+        id: 17,
+        level: "pro",
+        category: "draw",
+        categoryLabel: "6. 文字と線で描く",
+        nameJa: "テキストスクランブル",
+        nameEn: "text scramble",
+        desc: "ばらばらの文字が、そろって言葉に",
+        hint: "「再生」または見出しホバーで確認",
+        defaultTarget: "キャッチコピー・テック系見出し",
+        prompt: "ランダムな文字が高速に入れ替わりながら、左から順に本来の言葉へ揃っていくテキストスクランブル（text scramble）を実装してください。表示時およびボタン/ホバーで再生できるようにしてください。",
+        tips: "解読中のランダム文字の色を少し薄く（muted）しておくと、確定した文字が浮かび上がるようなハイテク感が増します。",
+        keywords: ["text scramble", "decode effect", "glyph animation", "requestAnimationFrame"]
+      },
+      {
+        id: 18,
+        level: "pro",
+        category: "draw",
+        categoryLabel: "6. 文字と線で描く",
+        nameJa: "ラインドロー",
+        nameEn: "SVG line drawing",
+        desc: "線が順に描かれる。図やロゴに",
+        hint: "「再生」ボタンで線画アニメーションを確認",
+        defaultTarget: "コンセプト図解・線画イラスト・ロゴ",
+        prompt: "線画のSVGイラストが一筆書きのように順番に描かれていくラインドロー（SVG line drawing）を実装してください。stroke-dasharray と stroke-dashoffset を使い、パーツごとに少しずつ開始タイミングをずらして描いてください。",
+        tips: "「パスごとにディレイをずらして順に描く」「描画完了後にアクセント塗りだけふわっと出す」と指示すると完成度が上がります。",
+        keywords: ["SVG line drawing", "stroke-dasharray", "stroke-dashoffset", "sequential draw"]
+      },
+      {
+        id: 19,
+        level: "pro",
+        category: "cursor",
+        categoryLabel: "7. カーソルで見せる",
+        nameJa: "3Dチルト",
+        nameEn: "3D tilt effect",
+        desc: "カーソルに合わせてカードが傾く",
+        hint: "カードの上でカーソルを動かして傾きを体感",
+        defaultTarget: "おすすめ席カード・料金プランカード",
+        prompt: "カーソルの位置に合わせてカードが立体的に傾く3Dチルト（3D tilt effect）を実装してください。perspectiveとrotateX/rotateYを使い、カーソル位置に応じた淡い光の反射（グレア）も追従させ、カーソルが離れたら滑らかに元の角度に戻してください。",
+        tips: "最大傾き角度は 8〜12deg 程度に抑えると高級感が出ます。カーソル離脱時だけ transition を戻すと追従時の遅延がなくなります。",
+        keywords: ["3D tilt effect", "perspective", "rotateX / rotateY", "glare highlight"]
+      },
+      {
+        id: 20,
+        level: "pro",
+        category: "cursor",
+        categoryLabel: "7. カーソルで見せる",
+        nameJa: "マグネットボタン",
+        nameEn: "magnetic button",
+        desc: "ボタンがカーソルに吸い寄せられる",
+        hint: "ボタン周辺にカーソルを近づけて体感",
+        defaultTarget: "メインCTAボタン（「予約する」など）",
+        prompt: "カーソルを近づけるとボタンが磁石のようにカーソル方向へ引き寄せられ、離れるとバネのように元に戻るマグネットボタン（magnetic button）を実装してください。ボタン内の文字も少しだけ連動して動かしてください。",
+        tips: "引き寄せ範囲と最大移動量（10〜18px程度）を控えめに設定すると押しやすさを損なわずに気持ちよい手触りになります。",
+        keywords: ["magnetic button", "cursor attraction", "spring return", "micro-interaction"]
+      },
+      {
+        id: 21,
+        level: "pro",
+        category: "cursor",
+        categoryLabel: "7. カーソルで見せる",
+        nameJa: "カーソルスポットライト",
+        nameEn: "cursor spotlight",
+        desc: "カーソルのまわりだけ光る",
+        hint: "暗いカード群の上でカーソルを動かす",
+        defaultTarget: "ダークテーマの特徴カードグリッド",
+        prompt: "ダーク背景のカード群の上でカーソルを動かすと、カーソル周辺だけがぼんやり光るカーソルスポットライト（cursor spotlight）を実装してください。CSS変数（--mx, --my）とradial-gradientで、カードの背景と枠線が連動して光るようにしてください。",
+        tips: "Linear や Vercel 風のモダンなダークUIに相性抜群です。複数カードを並べて枠線も一緒に光らせると一体感が出ます。",
+        keywords: ["cursor spotlight", "radial-gradient", "CSS variables", "glowing border"]
+      },
+      {
+        id: 22,
+        level: "pro",
+        category: "finish",
+        categoryLabel: "8. つなぐ・仕上げる",
+        nameJa: "背景色の切り替え",
+        nameEn: "background color change",
+        desc: "次の節に入ると、地の色が替わる",
+        hint: "枠内を下にスクロールして昼→夜の切替を確認",
+        defaultTarget: "昼プラン→夜プランのセクション切り替え",
+        prompt: "スクロールして次のセクションに入ると、ページ全体の背景色と文字色が滑らかに切り替わる背景色の切り替え（background color change）を実装してください。明るいライト基調から夜の落ち着いたダーク基調へ0.6秒ほどで遷移させてください。",
+        tips: "各セクションに data-theme や data-bg を持たせ、IntersectionObserver でコンテナの背景色と文字色を transition させると綺麗です。",
+        keywords: ["background color change", "section theme switch", "color transition", "day to night"]
+      },
+      {
+        id: 23,
+        level: "pro",
+        category: "finish",
+        categoryLabel: "8. つなぐ・仕上げる",
+        nameJa: "ページトランジション",
+        nameEn: "page transition",
+        desc: "幕が上がるように、次のページへ",
+        hint: "カードをクリックして画面遷移を体感",
+        defaultTarget: "一覧画面から詳細画面への切り替え",
+        prompt: "リンクやカードをクリックしたときに、幕（カーテン）が下からすっと上がって画面を覆い、次のページ（またはビュー）へ滑らかに切り替わるページトランジション（page transition）を実装してください。",
+        tips: "所要時間は合計 0.5〜0.7秒程度に抑えると待たされ感がなく、アプリのような心地よい画面遷移になります。",
+        keywords: ["page transition", "curtain wipe", "view transition", "route animation"]
+      },
+      {
+        id: 24,
+        level: "pro",
+        category: "finish",
+        categoryLabel: "8. つなぐ・仕上げる",
+        nameJa: "オーロラ背景",
+        nameEn: "aurora background",
+        desc: "ぼかした色がゆっくり動く背景",
+        hint: "背後のグラデーションがゆっくり揺らめきます",
+        defaultTarget: "ファーストビュー・CTAセクションの背景",
+        prompt: "複数のぼかしたカラーグラデーション（ティール・ミント・淡いブルーなど）がゆっくり揺らめきながら動くオーロラ背景（aurora background）を実装してください。filter: blur() とCSSアニメーションを使い、前面のテキストの可読性を保ってください。",
+        tips: "色数を2〜3色に絞り、動きを7〜12秒のゆったりした周期にすると、上品で邪魔にならないモダンな背景になります。",
+        keywords: ["aurora background", "mesh gradient", "soft blur", "ambient motion"]
+      }
+    ];
 
-          shapes.forEach((el, idx) => {
-            let len = 100;
-            try { len = el.getTotalLength() || 100; } catch (_) {}
-            const dur = Math.max(0.28, Math.min(1.25, len / 420));
-            const stagger = Math.min(0.065, 0.85 / Math.max(shapes.length, 1));
-            const start = stageStart + idx * stagger;
-            const end = start + dur;
-            if (end > stageEnd) stageEnd = end;
+    // State
+    let state = {
+      search: "",
+      level: "all",
+      category: "all",
+      selectedIds: new Set([1, 7, 24]),
+      activeModalId: null,
+      intensity: "standard"
+    };
 
-            el.style.strokeDasharray = `${len.toFixed(2)} ${len.toFixed(2)}`;
-            el.style.strokeDashoffset = `${len.toFixed(2)}`;
-            el.style.visibility = 'hidden';
+    // Toast helper
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.remove("opacity-0", "translate-y-2");
+      el.classList.add("opacity-100", "translate-y-0");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        el.classList.add("opacity-0", "translate-y-2");
+        el.classList.remove("opacity-100", "translate-y-0");
+      }, 1800);
+    }
 
-            items.push({ el, len, start, dur, end, label });
+    async function copyText(text, label = "コピーしました！") {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(label);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast(label);
+      }
+    }
+
+    // Build Demo HTML for each motion
+    function buildDemoHTML(m) {
+      const topDots = `
+        <div class="flex items-center justify-between px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800/90 border-b border-slate-200/80 dark:border-slate-700/80 text-xs">
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+            <span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+            <span class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
+          </div>
+          <span class="text-slate-500 dark:text-slate-400 truncate max-w-[75%] font-medium" style="font-size:11px;">${m.hint}</span>
+        </div>
+      `;
+
+      let stage = "";
+      switch (m.id) {
+        case 1: // Hover Lift
+          stage = `
+            <div class="h-44 p-3 bg-slate-50 text-slate-800 flex flex-col justify-center">
+              <div class="text-xs font-bold text-slate-600 mb-2">人気の席</div>
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="demo-lift-card cursor-pointer rounded-xl bg-white border border-slate-200 p-2 shadow-xs">
+                  <div class="h-14 rounded-lg bg-gradient-to-br from-amber-100 via-emerald-50 to-teal-100 mb-1.5 flex items-center justify-center text-xs font-semibold text-teal-800">☕ カフェ席</div>
+                  <div class="text-xs font-bold truncate">窓ぎわのカフェ席</div>
+                  <div class="flex items-center justify-between mt-1">
+                    <span class="text-xs text-slate-500">¥500/時</span>
+                    <span class="demo-lift-arrow inline-flex items-center justify-center w-5 h-5 rounded-full bg-teal-500 text-white text-xs transition-transform">→</span>
+                  </div>
+                </div>
+                <div class="demo-lift-card cursor-pointer rounded-xl bg-white border border-slate-200 p-2 shadow-xs">
+                  <div class="h-14 rounded-lg bg-gradient-to-br from-sky-100 via-indigo-50 to-slate-100 mb-1.5 flex items-center justify-center text-xs font-semibold text-sky-800">💼 会議室</div>
+                  <div class="text-xs font-bold truncate">6人の会議室</div>
+                  <div class="flex items-center justify-between mt-1">
+                    <span class="text-xs text-slate-500">¥1,800/時</span>
+                    <span class="demo-lift-arrow inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-xs transition-transform">→</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 2: // Animated Underline
+          stage = `
+            <div class="h-44 p-4 bg-white text-slate-800 flex flex-col justify-between">
+              <div class="w-5 h-5 rounded bg-slate-900 flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+              </div>
+              <nav class="flex items-center justify-center gap-6 py-4">
+                <a href="javascript:void(0)" class="demo-underline-link text-sm font-bold text-slate-900">席をさがす</a>
+                <a href="javascript:void(0)" class="demo-underline-link text-sm font-bold text-slate-700">料金</a>
+                <a href="javascript:void(0)" class="demo-underline-link text-sm font-bold text-slate-700">使い方</a>
+              </nav>
+              <div class="h-4 rounded bg-slate-100"></div>
+            </div>`;
+          break;
+
+        case 3: // Tooltip
+          stage = `
+            <div class="h-44 p-4 bg-slate-50 text-slate-800 flex items-center justify-center">
+              <div class="w-full max-w-[230px] rounded-xl bg-white border border-slate-200 p-3.5 shadow-xs">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm font-bold">キャンセル料</span>
+                  <div class="demo-tooltip-wrap relative inline-flex">
+                    <button type="button" class="w-5 h-5 rounded-full bg-teal-500 text-white text-xs font-bold flex items-center justify-center cursor-pointer focus:outline-none">?</button>
+                    <div class="demo-tooltip-box absolute left-1/2 bottom-full mb-2 w-max px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-lg">
+                      前日までなら無料
+                      <span class="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-slate-900"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-xs text-slate-500 mt-1">¥0〜¥500</div>
+              </div>
+            </div>`;
+          break;
+
+        case 4: // Dropdown
+          stage = `
+            <div class="h-44 p-3.5 bg-slate-50 text-slate-800 relative" data-demo="dropdown">
+              <div class="flex items-center justify-between mb-3">
+                <div class="relative">
+                  <button type="button" class="dd-trigger inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold shadow-xs cursor-pointer hover:border-teal-500">
+                    <span class="dd-label">エリア</span>
+                    <span class="dd-arrow text-slate-500 transition-transform duration-200">▾</span>
+                  </button>
+                  <div class="demo-dropdown-panel dd-panel absolute left-0 top-full mt-1.5 w-32 rounded-xl bg-white border border-slate-200 shadow-lg p-1 z-10">
+                    <button type="button" data-val="渋谷" class="dd-item w-full text-left px-2.5 py-1.5 rounded-lg text-xs hover:bg-teal-50 hover:text-teal-700 cursor-pointer">渋谷</button>
+                    <button type="button" data-val="新宿" class="dd-item w-full text-left px-2.5 py-1.5 rounded-lg text-xs hover:bg-teal-50 hover:text-teal-700 cursor-pointer font-semibold">新宿</button>
+                    <button type="button" data-val="東京" class="dd-item w-full text-left px-2.5 py-1.5 rounded-lg text-xs hover:bg-teal-50 hover:text-teal-700 cursor-pointer">東京</button>
+                  </div>
+                </div>
+                <div class="w-5 h-5 rounded bg-slate-900 flex items-center justify-center"><span class="w-2 h-2 rounded-full bg-teal-400"></span></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="h-20 rounded-xl bg-slate-200/70"></div>
+                <div class="h-20 rounded-xl bg-slate-200/70"></div>
+              </div>
+            </div>`;
+          break;
+
+        case 5: // Accordion
+          stage = `
+            <div class="h-44 p-3 bg-white text-slate-800 overflow-y-auto demo-scroll divide-y divide-slate-200" data-demo="accordion">
+              <div class="py-1.5">
+                <button type="button" class="acc-btn w-full flex items-center justify-between text-left text-xs font-bold py-1 cursor-pointer">
+                  <span>キャンセルはできますか？</span>
+                  <span class="acc-icon text-teal-600 font-mono transition-transform duration-200 rotate-45">+</span>
+                </button>
+                <div class="demo-acc-body open">
+                  <div class="text-xs text-slate-500 pt-1 pb-1.5 leading-relaxed">前日の23時までなら無料で取り消せます。当日は料金の半分がかかります。</div>
+                </div>
+              </div>
+              <div class="py-1.5">
+                <button type="button" class="acc-btn w-full flex items-center justify-between text-left text-xs font-bold py-1 cursor-pointer">
+                  <span>電源はありますか？</span>
+                  <span class="acc-icon text-slate-500 font-mono transition-transform duration-200">+</span>
+                </button>
+                <div class="demo-acc-body">
+                  <div class="text-xs text-slate-500 pt-1 pb-1.5">全席にコンセントとUSB-Cポートを完備しています。</div>
+                </div>
+              </div>
+              <div class="py-1.5">
+                <button type="button" class="acc-btn w-full flex items-center justify-between text-left text-xs font-bold py-1 cursor-pointer">
+                  <span>予約の変更はできますか？</span>
+                  <span class="acc-icon text-slate-500 font-mono transition-transform duration-200">+</span>
+                </button>
+                <div class="demo-acc-body">
+                  <div class="text-xs text-slate-500 pt-1 pb-1.5">開始1時間前までマイページから変更できます。</div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 6: // Modal
+          stage = `
+            <div class="h-44 relative bg-slate-100 text-slate-800 p-4 flex flex-col items-center justify-center gap-2 overflow-hidden" data-demo="modal">
+              <div class="text-xs text-slate-500">窓ぎわのカフェ席・¥1,000</div>
+              <button type="button" class="modal-open-btn px-3.5 py-2 rounded-full bg-teal-500 text-white text-xs font-bold shadow hover:bg-teal-600 cursor-pointer">
+                この席を予約する
+              </button>
+              <div class="modal-status text-xs text-teal-700 font-semibold h-4"></div>
+
+              <div class="modal-backdrop absolute inset-0 bg-slate-900/55 backdrop-blur-[1px] flex items-center justify-center p-3 opacity-0 pointer-events-none transition-opacity duration-200">
+                <div class="modal-box w-full max-w-[230px] rounded-xl bg-white p-3.5 shadow-xl transform scale-95 transition-transform duration-200">
+                  <div class="text-xs font-bold text-slate-900">この席を予約しますか？</div>
+                  <div class="text-xs text-slate-500 mt-0.5">今日 14:00〜16:00・¥1,000</div>
+                  <div class="flex items-center gap-2 mt-3">
+                    <button type="button" class="modal-cancel flex-1 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer">やめる</button>
+                    <button type="button" class="modal-confirm flex-1 py-1.5 rounded-full bg-teal-500 text-white text-xs font-bold hover:bg-teal-600 cursor-pointer">予約する</button>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 7: // Scroll Reveal
+          stage = `
+            <div class="h-44 relative bg-slate-50 text-slate-800" data-demo="scroll-reveal">
+              <button type="button" class="replay-btn absolute right-2 top-2 z-10 px-2 py-0.5 rounded bg-white/90 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <div class="sr-scroll h-full overflow-y-auto demo-scroll p-3 space-y-3">
+                <div class="h-24 rounded-lg bg-gradient-to-r from-teal-50 to-slate-100 border border-slate-200/70 flex flex-col items-center justify-center text-xs text-slate-500">
+                  <span class="font-bold text-slate-700">下にスクロール ↓</span>
+                  <span>カードがふわっと出ます</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2 pb-4">
+                  <div class="demo-reveal-item rounded-lg bg-white border border-slate-200 p-1.5 shadow-xs">
+                    <div class="h-10 rounded bg-amber-100 mb-1"></div>
+                    <div class="h-2 w-10 rounded bg-slate-200"></div>
+                  </div>
+                  <div class="demo-reveal-item rounded-lg bg-white border border-slate-200 p-1.5 shadow-xs" style="transition-delay:110ms">
+                    <div class="h-10 rounded bg-teal-100 mb-1"></div>
+                    <div class="h-2 w-10 rounded bg-slate-200"></div>
+                  </div>
+                  <div class="demo-reveal-item rounded-lg bg-white border border-slate-200 p-1.5 shadow-xs" style="transition-delay:220ms">
+                    <div class="h-10 rounded bg-sky-100 mb-1"></div>
+                    <div class="h-2 w-10 rounded bg-slate-200"></div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 8: // Sticky Header
+          stage = `
+            <div class="h-44 bg-slate-50 text-slate-800 overflow-y-auto demo-scroll" data-demo="sticky">
+              <div class="sticky-bar sticky top-0 z-10 flex items-center justify-between px-3 py-2 bg-white/90 backdrop-blur border-b border-slate-200 transition-shadow">
+                <div class="w-4 h-4 rounded bg-slate-900 flex items-center justify-center"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span></div>
+                <div class="flex items-center gap-2 text-xs">
+                  <span class="px-2 py-0.5 rounded-full bg-teal-500 text-white font-semibold">席をさがす</span>
+                  <span class="text-slate-600">料金</span>
+                  <span class="text-slate-600">使い方</span>
+                </div>
+              </div>
+              <div class="p-3 space-y-2.5">
+                <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center gap-2.5">
+                  <div class="w-10 h-8 rounded bg-amber-100 shrink-0"></div>
+                  <div class="space-y-1 flex-1"><div class="h-2 w-24 rounded bg-slate-200"></div><div class="h-2 w-16 rounded bg-slate-100"></div></div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center gap-2.5">
+                  <div class="w-10 h-8 rounded bg-teal-100 shrink-0"></div>
+                  <div class="space-y-1 flex-1"><div class="h-2 w-28 rounded bg-slate-200"></div><div class="h-2 w-14 rounded bg-slate-100"></div></div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center gap-2.5">
+                  <div class="w-10 h-8 rounded bg-sky-100 shrink-0"></div>
+                  <div class="space-y-1 flex-1"><div class="h-2 w-20 rounded bg-slate-200"></div><div class="h-2 w-16 rounded bg-slate-100"></div></div>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white border border-slate-200 flex items-center gap-2.5">
+                  <div class="w-10 h-8 rounded bg-purple-100 shrink-0"></div>
+                  <div class="space-y-1 flex-1"><div class="h-2 w-24 rounded bg-slate-200"></div><div class="h-2 w-12 rounded bg-slate-100"></div></div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 9: // Smooth Scroll
+          stage = `
+            <div class="h-44 flex flex-col bg-slate-50 text-slate-800" data-demo="smooth-scroll">
+              <div class="flex items-center justify-between px-3 py-1.5 bg-white border-b border-slate-200 shrink-0">
+                <div class="w-4 h-4 rounded bg-slate-900 flex items-center justify-center"><span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span></div>
+                <div class="flex items-center gap-1.5 text-xs">
+                  <button type="button" data-target="sec-top" class="ss-nav px-2 py-0.5 rounded-full bg-teal-500 text-white font-semibold cursor-pointer">トップ</button>
+                  <button type="button" data-target="sec-price" class="ss-nav px-2 py-0.5 rounded-full text-slate-600 hover:bg-slate-100 cursor-pointer">料金</button>
+                  <button type="button" data-target="sec-access" class="ss-nav px-2 py-0.5 rounded-full text-slate-600 hover:bg-slate-100 cursor-pointer">アクセス</button>
+                </div>
+              </div>
+              <div class="ss-container flex-1 overflow-y-auto demo-scroll scroll-smooth p-3 space-y-4">
+                <div data-sec="sec-top" class="p-3 rounded-lg bg-white border border-slate-200">
+                  <div class="text-xs font-bold">トップ</div>
+                  <div class="text-xs text-slate-500 mt-1">上の目次を押すと、するっと移動します。</div>
+                </div>
+                <div data-sec="sec-price" class="p-3 rounded-lg bg-white border border-slate-200">
+                  <div class="text-xs font-bold mb-1.5">料金</div>
+                  <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
+                    <div class="p-1.5 rounded bg-slate-50"><div class="text-slate-500">1時間</div><div class="font-bold">¥500</div></div>
+                    <div class="p-1.5 rounded bg-teal-50"><div class="text-teal-700">半日</div><div class="font-bold text-teal-800">¥1,800</div></div>
+                    <div class="p-1.5 rounded bg-slate-50"><div class="text-slate-500">1日</div><div class="font-bold">¥3,000</div></div>
+                  </div>
+                </div>
+                <div data-sec="sec-access" class="p-3 rounded-lg bg-white border border-slate-200">
+                  <div class="text-xs font-bold">アクセス</div>
+                  <div class="text-xs text-slate-500 mt-1">渋谷駅 徒歩3分 / 新宿駅 徒歩4分</div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 10: // Count-up
+          stage = `
+            <div class="h-44 relative bg-white text-slate-800 p-4 flex items-center justify-center" data-demo="count-up">
+              <button type="button" class="replay-btn absolute right-2 top-2 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <div class="grid grid-cols-3 gap-3 w-full text-center">
+                <div>
+                  <div class="text-lg font-extrabold tabular-nums text-slate-900"><span class="cu-num" data-to="1280" data-fmt="comma">1,280</span><span class="text-xs text-teal-600 ml-0.5">席</span></div>
+                  <div class="text-xs text-slate-500 mt-0.5">登録された席</div>
+                </div>
+                <div>
+                  <div class="text-lg font-extrabold tabular-nums text-slate-900"><span class="cu-num" data-to="98" data-fmt="int">98</span><span class="text-xs text-teal-600 ml-0.5">%</span></div>
+                  <div class="text-xs text-slate-500 mt-0.5">また使いたい</div>
+                </div>
+                <div>
+                  <div class="text-lg font-extrabold tabular-nums text-slate-900"><span class="cu-num" data-to="4.8" data-fmt="dec">4.8</span><span class="text-xs text-teal-600 ml-0.5">★</span></div>
+                  <div class="text-xs text-slate-500 mt-0.5">平均の評価</div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 11: // Marquee
+          stage = `
+            <div class="h-44 bg-slate-50 text-slate-800 py-3 flex flex-col justify-center gap-3 overflow-hidden demo-marquee-wrap">
+              <div class="px-3 text-xs font-semibold text-slate-500">ご利用中の会社・お客様の声</div>
+              <div class="overflow-hidden">
+                <div class="demo-marquee-track gap-2 pr-2">
+                  ${["Studio A", "TechFlow", "CafeWork", "NomaLab", "DesignCo", "Studio A", "TechFlow", "CafeWork", "NomaLab", "DesignCo"].map(n =>
+                    `<span class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-slate-600 shrink-0">${n}</span>`
+                  ).join("")}
+                </div>
+              </div>
+              <div class="overflow-hidden">
+                <div class="demo-marquee-track slow gap-2.5 pr-2.5">
+                  ${["★★★★★ 静かで集中できる", "★★★★★ 電源とWi-Fiが快適", "★★★★★ 30秒で予約完了", "★★★★★ 静かで集中できる", "★★★★★ 電源とWi-Fiが快適", "★★★★★ 30秒で予約完了"].map(r =>
+                    `<div class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs text-teal-700 font-semibold shrink-0 shadow-2xs">${r}</div>`
+                  ).join("")}
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 12: // Typewriter
+          stage = `
+            <div class="h-44 relative bg-white text-slate-800 p-4 flex flex-col justify-center gap-2" data-demo="typewriter">
+              <button type="button" class="replay-btn absolute right-2 top-2 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <div class="text-xs text-slate-400">いま空いている席を、30秒で</div>
+              <div class="text-lg font-extrabold tracking-tight text-slate-900 min-h-[28px]">
+                <span class="tw-text"></span><span class="demo-caret"></span>
+              </div>
+              <div>
+                <span class="inline-block px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-semibold">席をさがす</span>
+              </div>
+            </div>`;
+          break;
+
+        case 13: // Parallax
+          stage = `
+            <div class="h-44 relative bg-slate-100 text-slate-800 overflow-y-auto demo-scroll" data-demo="parallax">
+              <div class="h-80 relative overflow-hidden">
+                <div class="px-bg absolute inset-x-0 -top-6 h-56 bg-gradient-to-br from-emerald-200 via-teal-100 to-amber-100 flex items-center justify-around px-6 opacity-90">
+                  <div class="w-16 h-24 rounded-t-xl bg-white/50 border border-white/60"></div>
+                  <div class="w-20 h-28 rounded-t-xl bg-white/40 border border-white/60"></div>
+                  <div class="w-16 h-24 rounded-t-xl bg-white/50 border border-white/60"></div>
+                </div>
+                <div class="px-fg relative z-10 pt-10 px-4 space-y-3">
+                  <div class="flex justify-end">
+                    <span class="px-2.5 py-1 rounded-full bg-white/95 text-xs font-bold text-slate-800 shadow">
+                      <span class="inline-block w-2 h-2 rounded-full bg-teal-500 mr-1"></span>空きあり 3席
+                    </span>
+                  </div>
+                  <div class="w-4/5 rounded-xl bg-white/95 p-3 shadow-md border border-white">
+                    <div class="text-sm font-extrabold text-slate-900">窓ぎわで、はかどる。</div>
+                    <div class="text-xs text-slate-500 mt-0.5">スクロールで背景と手前の速度差を確認</div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 14: // Scrollytelling
+          stage = `
+            <div class="h-44 bg-slate-50 text-slate-800 grid grid-cols-2 overflow-hidden" data-demo="scrollytelling">
+              <div class="st-scroll h-full overflow-y-auto demo-scroll p-2.5 space-y-12">
+                <div class="st-step p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs" data-step="0">
+                  <div class="text-xs font-bold text-teal-600">4月</div>
+                  <div class="text-xs text-slate-600 mt-0.5">120席からスタート</div>
+                </div>
+                <div class="st-step p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs" data-step="1">
+                  <div class="text-xs font-bold text-teal-600">8月</div>
+                  <div class="text-xs text-slate-600 mt-0.5">480席に増えた</div>
+                </div>
+                <div class="st-step p-2.5 rounded-lg bg-white border border-slate-200 shadow-2xs mb-8" data-step="2">
+                  <div class="text-xs font-bold text-teal-600">11月</div>
+                  <div class="text-xs text-slate-600 mt-0.5">1,280席を突破</div>
+                </div>
+              </div>
+              <div class="p-3 bg-white border-l border-slate-200 flex flex-col justify-end">
+                <div class="st-caption text-xs font-bold text-slate-700 mb-2 text-center">4月: 120席</div>
+                <div class="flex items-end justify-center gap-3 h-24 px-2">
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="st-bar w-full rounded-t-md bg-teal-500 transition-all duration-300" style="height:24px"></div>
+                    <span class="text-xs text-slate-500">4月</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="st-bar w-full rounded-t-md bg-slate-200 transition-all duration-300" style="height:52px"></div>
+                    <span class="text-xs text-slate-500">8月</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1 flex-1">
+                    <div class="st-bar w-full rounded-t-md bg-slate-200 transition-all duration-300" style="height:78px"></div>
+                    <span class="text-xs text-slate-500">11月</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 15: // Stacking Cards
+          stage = `
+            <div class="h-44 bg-slate-100 text-slate-800 overflow-y-auto demo-scroll p-3 space-y-6" data-demo="stack">
+              <div class="sticky top-1 rounded-xl bg-white border border-slate-200 p-3 shadow-sm">
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-teal-500 text-white text-xs font-bold flex items-center justify-center">1</span><span class="text-xs font-bold">席をえらぶ</span></div>
+                <div class="text-xs text-slate-500 mt-1">エリアや設備から理想の席を検索</div>
+              </div>
+              <div class="sticky top-4 rounded-xl bg-teal-50 border border-teal-200 p-3 shadow-md">
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-teal-600 text-white text-xs font-bold flex items-center justify-center">2</span><span class="text-xs font-bold">時間をきめる</span></div>
+                <div class="text-xs text-teal-800/80 mt-1">1時間単位でスマートに時間指定</div>
+              </div>
+              <div class="sticky top-7 rounded-xl bg-slate-900 text-white border border-slate-700 p-3 shadow-lg mb-8">
+                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-teal-400 text-slate-900 text-xs font-bold flex items-center justify-center">3</span><span class="text-xs font-bold">予約を確定</span></div>
+                <div class="text-xs text-slate-300 mt-1">QRコードでそのままチェックイン</div>
+              </div>
+            </div>`;
+          break;
+
+        case 16: // Text Reveal
+          stage = `
+            <div class="h-44 relative bg-white text-slate-900 p-5 flex flex-col justify-center" data-demo="text-reveal">
+              <button type="button" class="replay-btn absolute right-2 top-2 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <div class="space-y-1">
+                <div class="overflow-hidden"><span class="demo-text-reveal-line tr-line text-lg font-extrabold tracking-tight">移動のすきまを、</span></div>
+                <div class="overflow-hidden"><span class="demo-text-reveal-line tr-line text-lg font-extrabold tracking-tight" style="transition-delay:140ms">仕事の時間に。</span></div>
+              </div>
+              <div class="demo-text-reveal-bar tr-bar w-16 h-1 rounded-full bg-teal-500 mt-3"></div>
+            </div>`;
+          break;
+
+        case 17: // Text Scramble
+          stage = `
+            <div class="h-44 relative bg-white text-slate-900 p-5 flex flex-col justify-center gap-2" data-demo="scramble">
+              <button type="button" class="replay-btn absolute right-2 top-2 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <div class="text-xs text-slate-400">はたらく場所の予約</div>
+              <div class="sc-text text-lg font-extrabold tracking-tight cursor-pointer">どこでも、仕事場に。</div>
+              <div>
+                <span class="inline-block px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-semibold">はじめる</span>
+              </div>
+            </div>`;
+          break;
+
+        case 18: // SVG Line Drawing
+          stage = `
+            <div class="h-44 relative bg-white text-slate-900 p-3 flex items-center justify-center" data-demo="line-draw">
+              <button type="button" class="replay-btn absolute right-2 top-2 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:border-teal-500 cursor-pointer">再生</button>
+              <svg viewBox="0 0 260 120" class="w-56 h-28" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Accent fills (fade in after strokes finish) -->
+                <polygon class="demo-svg-fill" points="108,72 114,44 162,44 168,72" fill="rgba(20,184,166,0.28)" />
+                <circle class="demo-svg-fill" cx="226" cy="40" r="4.5" fill="#14b8a6" />
+                <!-- 1. Floor line -->
+                <path class="demo-svg-path" d="M25 102 L235 102" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 2. Chair -->
+                <path class="demo-svg-path" d="M40 102 L40 84 Q40 78 46 78 L54 78 Q60 78 60 84 L60 102" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 3. Desk left leg -->
+                <path class="demo-svg-path" d="M72 102 L72 72" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 4. Desk top -->
+                <path class="demo-svg-path" d="M62 72 L212 72" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 5. Desk right leg -->
+                <path class="demo-svg-path" d="M198 72 L198 102" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 6. Laptop outline -->
+                <path class="demo-svg-path" d="M108 72 L114 44 L162 44 L168 72 Z" stroke="#0f172a" stroke-width="2.5" />
+                <!-- 7. Mug -->
+                <path class="demo-svg-path" d="M178 72 L178 60 L190 60 L190 72" stroke="#0f172a" stroke-width="2.2" />
+                <!-- 8. Lamp stand & arm -->
+                <path class="demo-svg-path" d="M206 102 L206 42 Q206 30 218 30 Q226 30 226 38" stroke="#0f172a" stroke-width="2.2" />
+                <!-- 9. Lamp bulb -->
+                <circle class="demo-svg-path" cx="226" cy="40" r="4.5" stroke="#14b8a6" stroke-width="2.5" />
+              </svg>
+            </div>`;
+          break;
+
+        case 19: // 3D Tilt
+          stage = `
+            <div class="h-44 bg-slate-50 text-slate-800 flex items-center justify-center p-4" style="perspective:700px" data-demo="tilt">
+              <div class="tilt-card relative w-48 rounded-2xl bg-white border border-slate-200 p-2.5 shadow-md overflow-hidden cursor-pointer" style="transform-style:preserve-3d; transition:transform 200ms ease-out;">
+                <div class="tilt-glare pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200"></div>
+                <div class="h-20 rounded-xl bg-gradient-to-br from-sky-100 via-teal-50 to-amber-100 mb-2 flex items-center justify-center text-xs font-bold text-teal-800">🌤 屋上のテラス席</div>
+                <div class="text-xs font-bold text-slate-900">屋上のテラス席</div>
+                <div class="text-xs text-slate-500">¥700 / 時</div>
+              </div>
+            </div>`;
+          break;
+
+        case 20: // Magnetic Button
+          stage = `
+            <div class="h-44 bg-white text-slate-800 flex items-center justify-center" data-demo="magnetic">
+              <div class="mag-zone w-44 h-32 rounded-full border border-dashed border-slate-300 flex items-center justify-center">
+                <button type="button" class="mag-btn px-6 py-2.5 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 text-white text-xs font-bold shadow-md cursor-pointer" style="transition:transform 180ms cubic-bezier(0.22,1,0.36,1)">
+                  <span class="mag-label inline-block" style="transition:transform 180ms cubic-bezier(0.22,1,0.36,1)">予約する</span>
+                </button>
+              </div>
+            </div>`;
+          break;
+
+        case 21: // Cursor Spotlight
+          stage = `
+            <div class="h-44 bg-slate-950 p-3 flex items-center justify-center" data-demo="spotlight">
+              <div class="spot-grid grid grid-cols-3 gap-2 w-full">
+                ${["電源あり", "静かな席", "駅から近い"].map(label => `
+                  <div class="spot-card relative rounded-xl p-[1px] bg-slate-800 overflow-hidden cursor-pointer">
+                    <div class="spot-glow pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200"></div>
+                    <div class="relative h-28 rounded-[11px] bg-slate-900/95 p-2.5 flex flex-col justify-between">
+                      <span class="w-4 h-4 rounded bg-slate-800 border border-slate-700"></span>
+                      <span class="text-xs font-bold text-slate-100">${label}</span>
+                    </div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>`;
+          break;
+
+        case 22: // Background Color Change
+          stage = `
+            <div class="h-44 overflow-y-auto demo-scroll transition-colors duration-500 bg-slate-50 text-slate-900" data-demo="bg-change">
+              <div class="p-4 min-h-[155px] flex flex-col justify-center">
+                <div class="text-xs font-semibold text-teal-600">DAYTIME</div>
+                <div class="text-sm font-extrabold mt-0.5">昼は、明るい窓ぎわで。</div>
+                <div class="text-xs opacity-70 mt-1">下にスクロールすると背景色が夜に変わります ↓</div>
+              </div>
+              <div class="bg-night-trigger p-4 min-h-[165px] flex flex-col justify-center">
+                <div class="text-xs font-semibold text-teal-400">NIGHTTIME</div>
+                <div class="text-sm font-extrabold mt-0.5">夜は、静かな個室で。</div>
+                <div class="text-xs opacity-75 mt-0.5">24時まで使える席</div>
+                <div class="mt-2.5">
+                  <span class="inline-block px-3 py-1 rounded-full bg-teal-500 text-white text-xs font-semibold">夜の席を見る</span>
+                </div>
+              </div>
+            </div>`;
+          break;
+
+        case 23: // Page Transition
+          stage = `
+            <div class="h-44 relative bg-slate-50 text-slate-800 overflow-hidden" data-demo="page-trans">
+              <!-- Page A -->
+              <div class="pt-page-a absolute inset-0 p-3 flex flex-col justify-center">
+                <div class="text-xs font-bold mb-2">席をさがす（カードを押して遷移）</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <button type="button" data-seat="窓ぎわのカフェ席" class="pt-go text-left rounded-xl bg-white border border-slate-200 p-2 hover:border-teal-500 cursor-pointer">
+                    <div class="h-12 rounded-lg bg-amber-100 mb-1.5"></div>
+                    <div class="text-xs font-bold truncate">窓ぎわのカフェ席</div>
+                  </button>
+                  <button type="button" data-seat="6人の会議室" class="pt-go text-left rounded-xl bg-white border border-slate-200 p-2 hover:border-teal-500 cursor-pointer">
+                    <div class="h-12 rounded-lg bg-sky-100 mb-1.5"></div>
+                    <div class="text-xs font-bold truncate">6人の会議室</div>
+                  </button>
+                </div>
+              </div>
+              <!-- Page B -->
+              <div class="pt-page-b absolute inset-0 p-4 bg-white hidden flex-col justify-between">
+                <button type="button" class="pt-back self-start text-xs font-bold text-teal-600 hover:underline cursor-pointer">← 一覧へ戻る</button>
+                <div>
+                  <div class="pt-seat-title text-sm font-extrabold text-slate-900">窓ぎわのカフェ席</div>
+                  <div class="text-xs text-slate-500 mt-1">幕が上がるトランジションで詳細ページへ切り替わりました。</div>
+                </div>
+                <span class="self-start px-3 py-1 rounded-full bg-teal-500 text-white text-xs font-semibold">空き時間を見る</span>
+              </div>
+              <!-- Curtain -->
+              <div class="demo-curtain pt-curtain absolute inset-0 bg-teal-600 z-20 flex items-center justify-center text-white text-xs font-bold tracking-widest">
+                LOADING...
+              </div>
+            </div>`;
+          break;
+
+        case 24: // Aurora Background
+          stage = `
+            <div class="h-44 relative bg-white text-slate-900 overflow-hidden flex flex-col items-center justify-center gap-2.5 p-4">
+              <div class="aurora-blob-1 pointer-events-none absolute -top-10 -left-8 w-44 h-44 rounded-full bg-teal-300/60 blur-2xl"></div>
+              <div class="aurora-blob-2 pointer-events-none absolute -bottom-12 -right-6 w-48 h-48 rounded-full bg-sky-300/55 blur-2xl"></div>
+              <div class="aurora-blob-3 pointer-events-none absolute top-6 right-12 w-32 h-32 rounded-full bg-violet-300/45 blur-2xl"></div>
+              <div class="relative z-10 text-base font-extrabold tracking-tight text-slate-900">どこでも、仕事場に。</div>
+              <span class="relative z-10 px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-semibold shadow">はじめる</span>
+            </div>`;
+          break;
+      }
+
+      return `<div class="rounded-xl overflow-hidden border border-[var(--border)] shadow-2xs">${topDots}${stage}</div>`;
+    }
+
+    // Wire interactive JS for every demo inside rendered cards
+    function initDemos() {
+      // 4. Dropdown
+      document.querySelectorAll('[data-demo="dropdown"]').forEach(root => {
+        const trigger = root.querySelector('.dd-trigger');
+        const panel = root.querySelector('.dd-panel');
+        const arrow = root.querySelector('.dd-arrow');
+        const label = root.querySelector('.dd-label');
+        trigger.addEventListener('click', () => {
+          const open = panel.classList.toggle('open');
+          arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+        root.querySelectorAll('.dd-item').forEach(btn => {
+          btn.addEventListener('click', () => {
+            label.textContent = btn.dataset.val;
+            panel.classList.remove('open');
+            arrow.style.transform = 'rotate(0deg)';
+          });
+        });
+      });
+
+      // 5. Accordion
+      document.querySelectorAll('[data-demo="accordion"]').forEach(root => {
+        root.querySelectorAll('.acc-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const body = btn.nextElementSibling;
+            const icon = btn.querySelector('.acc-icon');
+            const isOpen = body.classList.toggle('open');
+            icon.classList.toggle('rotate-45', isOpen);
+            icon.classList.toggle('text-teal-600', isOpen);
+          });
+        });
+      });
+
+      // 6. Modal
+      document.querySelectorAll('[data-demo="modal"]').forEach(root => {
+        const openBtn = root.querySelector('.modal-open-btn');
+        const backdrop = root.querySelector('.modal-backdrop');
+        const box = root.querySelector('.modal-box');
+        const status = root.querySelector('.modal-status');
+        const close = () => {
+          backdrop.classList.add('opacity-0', 'pointer-events-none');
+          box.classList.add('scale-95');
+        };
+        openBtn.addEventListener('click', () => {
+          status.textContent = '';
+          backdrop.classList.remove('opacity-0', 'pointer-events-none');
+          box.classList.remove('scale-95');
+        });
+        root.querySelector('.modal-cancel').addEventListener('click', close);
+        root.querySelector('.modal-confirm').addEventListener('click', () => {
+          close();
+          status.textContent = '✓ 予約を確定しました';
+        });
+        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
+      });
+
+      // 7. Scroll Reveal
+      document.querySelectorAll('[data-demo="scroll-reveal"]').forEach(root => {
+        const scroller = root.querySelector('.sr-scroll');
+        const items = root.querySelectorAll('.demo-reveal-item');
+        const check = () => {
+          if (scroller.scrollTop > 22) {
+            items.forEach(el => el.classList.add('visible'));
+          }
+        };
+        scroller.addEventListener('scroll', check);
+        root.querySelector('.replay-btn').addEventListener('click', () => {
+          items.forEach(el => el.classList.remove('visible'));
+          scroller.scrollTop = 0;
+          setTimeout(() => {
+            scroller.scrollTo({ top: 90, behavior: 'smooth' });
+          }, 120);
+        });
+      });
+
+      // 8. Sticky Header shadow
+      document.querySelectorAll('[data-demo="sticky"]').forEach(scroller => {
+        const bar = scroller.querySelector('.sticky-bar');
+        scroller.addEventListener('scroll', () => {
+          bar.classList.toggle('shadow-md', scroller.scrollTop > 8);
+        });
+      });
+
+      // 9. Smooth Scroll
+      document.querySelectorAll('[data-demo="smooth-scroll"]').forEach(root => {
+        const container = root.querySelector('.ss-container');
+        const navs = root.querySelectorAll('.ss-nav');
+        navs.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const target = container.querySelector(`[data-sec="${btn.dataset.target}"]`);
+            if (target) {
+              container.scrollTo({ top: target.offsetTop - 8, behavior: 'smooth' });
+            }
+            navs.forEach(n => {
+              n.classList.remove('bg-teal-500', 'text-white', 'font-semibold');
+              n.classList.add('text-slate-600');
+            });
+            btn.classList.add('bg-teal-500', 'text-white', 'font-semibold');
+            btn.classList.remove('text-slate-600');
+          });
+        });
+      });
+
+      // 10. Count-up
+      document.querySelectorAll('[data-demo="count-up"]').forEach(root => {
+        const nums = root.querySelectorAll('.cu-num');
+        const run = () => {
+          const duration = 900;
+          const start = performance.now();
+          const tick = (now) => {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - t, 3);
+            nums.forEach(el => {
+              const target = parseFloat(el.dataset.to);
+              const fmt = el.dataset.fmt;
+              const val = target * eased;
+              if (fmt === 'comma') el.textContent = Math.round(val).toLocaleString();
+              else if (fmt === 'dec') el.textContent = val.toFixed(1);
+              else el.textContent = Math.round(val);
+            });
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        root.querySelector('.replay-btn').addEventListener('click', run);
+        run();
+      });
+
+      // 12. Typewriter
+      document.querySelectorAll('[data-demo="typewriter"]').forEach(root => {
+        const targetEl = root.querySelector('.tw-text');
+        const full = "今日は、どこで働く？";
+        let timer = null;
+        const run = () => {
+          clearInterval(timer);
+          targetEl.textContent = "";
+          let idx = 0;
+          timer = setInterval(() => {
+            idx++;
+            targetEl.textContent = full.slice(0, idx);
+            if (idx >= full.length) clearInterval(timer);
+          }, 95);
+        };
+        root.querySelector('.replay-btn').addEventListener('click', run);
+        run();
+      });
+
+      // 13. Parallax
+      document.querySelectorAll('[data-demo="parallax"]').forEach(scroller => {
+        const bg = scroller.querySelector('.px-bg');
+        const fg = scroller.querySelector('.px-fg');
+        scroller.addEventListener('scroll', () => {
+          const y = scroller.scrollTop;
+          bg.style.transform = `translate3d(0, ${y * 0.45}px, 0)`;
+          fg.style.transform = `translate3d(0, ${-y * 0.12}px, 0)`;
+        });
+      });
+
+      // 14. Scrollytelling
+      document.querySelectorAll('[data-demo="scrollytelling"]').forEach(root => {
+        const scroller = root.querySelector('.st-scroll');
+        const bars = root.querySelectorAll('.st-bar');
+        const caption = root.querySelector('.st-caption');
+        const labels = ["4月: 120席", "8月: 480席", "11月: 1,280席"];
+        const setStep = (idx) => {
+          caption.textContent = labels[idx];
+          bars.forEach((b, i) => {
+            b.classList.toggle('bg-teal-500', i === idx);
+            b.classList.toggle('bg-slate-200', i !== idx);
+          });
+        };
+        scroller.addEventListener('scroll', () => {
+          const max = scroller.scrollHeight - scroller.clientHeight;
+          const ratio = max > 0 ? scroller.scrollTop / max : 0;
+          const idx = ratio < 0.35 ? 0 : ratio < 0.72 ? 1 : 2;
+          setStep(idx);
+        });
+      });
+
+      // 16. Text Reveal
+      document.querySelectorAll('[data-demo="text-reveal"]').forEach(root => {
+        const lines = root.querySelectorAll('.tr-line');
+        const bar = root.querySelector('.tr-bar');
+        const run = () => {
+          lines.forEach(l => l.classList.remove('shown'));
+          bar.classList.remove('shown');
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              lines.forEach(l => l.classList.add('shown'));
+              bar.classList.add('shown');
+            }, 60);
+          });
+        };
+        root.querySelector('.replay-btn').addEventListener('click', run);
+        run();
+      });
+
+      // 17. Text Scramble
+      document.querySelectorAll('[data-demo="scramble"]').forEach(root => {
+        const el = root.querySelector('.sc-text');
+        const finalStr = "どこでも、仕事場に。";
+        const chars = "アイウエオカキクケコ01#%&*+@";
+        let frame = null;
+        const run = () => {
+          cancelAnimationFrame(frame);
+          let iter = 0;
+          const step = () => {
+            el.textContent = finalStr.split("").map((ch, idx) => {
+              if (idx < iter) return ch;
+              return chars[Math.floor(Math.random() * chars.length)];
+            }).join("");
+            iter += 0.35;
+            if (iter <= finalStr.length) {
+              frame = requestAnimationFrame(step);
+            } else {
+              el.textContent = finalStr;
+            }
+          };
+          frame = requestAnimationFrame(step);
+        };
+        root.querySelector('.replay-btn').addEventListener('click', run);
+        el.addEventListener('mouseenter', run);
+        run();
+      });
+
+      // 18. SVG Line Draw (strictly sequential stroke-by-stroke)
+      document.querySelectorAll('[data-demo="line-draw"]').forEach(root => {
+        const paths = Array.from(root.querySelectorAll('.demo-svg-path'));
+        const fills = Array.from(root.querySelectorAll('.demo-svg-fill'));
+        let fillTimer = null;
+        const run = () => {
+          clearTimeout(fillTimer);
+          fills.forEach(f => f.classList.remove('shown'));
+
+          // Reset all strokes immediately to exact hidden length
+          const lengths = paths.map(p => Math.ceil(p.getTotalLength()));
+          paths.forEach((p, i) => {
+            p.style.transition = 'none';
+            p.style.strokeDasharray = `${lengths[i]}`;
+            p.style.strokeDashoffset = `${lengths[i]}`;
+          });
+          // Force reflow so reset state applies before animating
+          root.getBoundingClientRect();
+
+          let delay = 80;
+          paths.forEach((p, i) => {
+            const dur = Math.max(160, Math.min(460, Math.round(lengths[i] * 2.2)));
+            p.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(0.4, 0, 0.2, 1) ${delay}ms`;
+            p.style.strokeDashoffset = '0';
+            delay += dur + 45;
           });
 
-          cursor = Math.max(stageStart + 0.55, stageEnd - 0.35);
+          fillTimer = setTimeout(() => {
+            fills.forEach(f => f.classList.add('shown'));
+          }, delay);
+        };
+        root.querySelector('.replay-btn').addEventListener('click', run);
+        run();
+      });
+
+      // 19. 3D Tilt
+      document.querySelectorAll('[data-demo="tilt"]').forEach(root => {
+        const card = root.querySelector('.tilt-card');
+        const glare = root.querySelector('.tilt-glare');
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          const rotY = (x - 0.5) * 22;
+          const rotX = (0.5 - y) * 22;
+          card.style.transition = 'transform 60ms linear';
+          card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
+          glare.style.opacity = '1';
+          glare.style.background = `radial-gradient(circle at ${x*100}% ${y*100}%, rgba(255,255,255,0.55), transparent 60%)`;
         });
-        totalDuration = items.reduce((m, it) => Math.max(m, it.end), 1);
-      }
-
-      function ease(t) {
-        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      }
-
-      function renderAt(tSec) {
-        let activeLabel = '描画完了';
-        for (let i = 0; i < items.length; i++) {
-          const it = items[i];
-          if (tSec <= it.start) {
-            it.el.style.strokeDashoffset = it.len.toFixed(2);
-            it.el.style.visibility = 'hidden';
-          } else if (tSec >= it.end) {
-            it.el.style.strokeDashoffset = '0';
-            it.el.style.visibility = 'visible';
-          } else {
-            const p = ease((tSec - it.start) / it.dur);
-            it.el.style.strokeDashoffset = (it.len * (1 - p)).toFixed(2);
-            it.el.style.visibility = 'visible';
-            activeLabel = it.label;
-          }
-        }
-        const pct = Math.min(100, (tSec / totalDuration) * 100);
-        progressFill.style.width = `${pct.toFixed(1)}%`;
-        stageLabel.textContent = pct >= 100 ? '描画完了' : activeLabel;
-      }
-
-      function tick(now) {
-        if (isPaused) return;
-        const tSec = elapsedBeforePause + (now - animStartTime) / 1000;
-        renderAt(tSec);
-        if (tSec < totalDuration) {
-          rafId = requestAnimationFrame(tick);
-        } else {
-          rafId = null;
-          elapsedBeforePause = totalDuration;
-          btnPause.textContent = '一時停止';
-        }
-      }
-
-      function startAnimation() {
-        if (rafId) cancelAnimationFrame(rafId);
-        isPaused = false;
-        elapsedBeforePause = 0;
-        btnPause.textContent = '一時停止';
-        renderAt(0);
-        animStartTime = performance.now();
-        rafId = requestAnimationFrame(tick);
-      }
-
-      btnReplay.addEventListener('click', startAnimation);
-      btnPause.addEventListener('click', () => {
-        if (elapsedBeforePause >= totalDuration && !rafId) {
-          startAnimation();
-          return;
-        }
-        if (!isPaused) {
-          isPaused = true;
-          if (rafId) cancelAnimationFrame(rafId);
-          rafId = null;
-          elapsedBeforePause += (performance.now() - animStartTime) / 1000;
-          btnPause.textContent = '再開';
-        } else {
-          isPaused = false;
-          btnPause.textContent = '一時停止';
-          animStartTime = performance.now();
-          rafId = requestAnimationFrame(tick);
-        }
-      });
-      btnInstant.addEventListener('click', () => {
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = null;
-        isPaused = false;
-        elapsedBeforePause = totalDuration;
-        renderAt(totalDuration);
-      });
-
-      let activeFilter = null;
-      swatches.forEach((sw) => {
-        sw.addEventListener('click', () => {
-          const f = sw.dataset.filter;
-          svg.classList.remove('filter-ink', 'filter-blue', 'filter-green');
-          if (activeFilter === f) {
-            activeFilter = null;
-            swatches.forEach((s) => s.classList.remove('ring-1', 'ring-[var(--foreground)]'));
-          } else {
-            activeFilter = f;
-            svg.classList.add(`filter-${f}`);
-            swatches.forEach((s) => s.classList.toggle('ring-1', s === sw));
-            swatches.forEach((s) => s.classList.toggle('ring-[var(--foreground)]', s === sw));
-          }
+        card.addEventListener('mouseleave', () => {
+          card.style.transition = 'transform 260ms ease-out';
+          card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+          glare.style.opacity = '0';
         });
       });
 
-      buildTimeline();
-      startAnimation();
-    })();
+      // 20. Magnetic Button
+      document.querySelectorAll('[data-demo="magnetic"]').forEach(root => {
+        const zone = root.querySelector('.mag-zone');
+        const btn = root.querySelector('.mag-btn');
+        const label = root.querySelector('.mag-label');
+        zone.addEventListener('mousemove', (e) => {
+          const r = zone.getBoundingClientRect();
+          const dx = (e.clientX - (r.left + r.width / 2)) * 0.35;
+          const dy = (e.clientY - (r.top + r.height / 2)) * 0.35;
+          btn.style.transform = `translate(${dx}px, ${dy}px)`;
+          label.style.transform = `translate(${dx * 0.25}px, ${dy * 0.25}px)`;
+        });
+        zone.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0, 0)';
+          label.style.transform = 'translate(0, 0)';
+        });
+      });
+
+      // 21. Cursor Spotlight
+      document.querySelectorAll('[data-demo="spotlight"]').forEach(root => {
+        const grid = root.querySelector('.spot-grid');
+        const cards = root.querySelectorAll('.spot-card');
+        grid.addEventListener('mousemove', (e) => {
+          cards.forEach(c => {
+            const r = c.getBoundingClientRect();
+            const x = e.clientX - r.left;
+            const y = e.clientY - r.top;
+            const glow = c.querySelector('.spot-glow');
+            glow.style.opacity = '1';
+            glow.style.background = `radial-gradient(120px circle at ${x}px ${y}px, rgba(45, 212, 191, 0.85), transparent 70%)`;
+          });
+        });
+        grid.addEventListener('mouseleave', () => {
+          cards.forEach(c => { c.querySelector('.spot-glow').style.opacity = '0'; });
+        });
+      });
+
+      // 22. Background Color Change
+      document.querySelectorAll('[data-demo="bg-change"]').forEach(scroller => {
+        scroller.addEventListener('scroll', () => {
+          const isNight = scroller.scrollTop > 65;
+          scroller.classList.toggle('bg-slate-900', isNight);
+          scroller.classList.toggle('text-white', isNight);
+          scroller.classList.toggle('bg-slate-50', !isNight);
+          scroller.classList.toggle('text-slate-900', !isNight);
+        });
+      });
+
+      // 23. Page Transition
+      document.querySelectorAll('[data-demo="page-trans"]').forEach(root => {
+        const pageA = root.querySelector('.pt-page-a');
+        const pageB = root.querySelector('.pt-page-b');
+        const curtain = root.querySelector('.pt-curtain');
+        const title = root.querySelector('.pt-seat-title');
+        const transitionTo = (showB, seatName) => {
+          curtain.classList.remove('leave');
+          curtain.classList.add('cover');
+          setTimeout(() => {
+            if (showB) {
+              title.textContent = seatName;
+              pageA.classList.add('hidden');
+              pageB.classList.remove('hidden');
+              pageB.classList.add('flex');
+            } else {
+              pageB.classList.add('hidden');
+              pageB.classList.remove('flex');
+              pageA.classList.remove('hidden');
+            }
+            curtain.classList.remove('cover');
+            curtain.classList.add('leave');
+            setTimeout(() => {
+              curtain.style.transition = 'none';
+              curtain.classList.remove('leave');
+              requestAnimationFrame(() => { curtain.style.transition = ''; });
+            }, 340);
+          }, 340);
+        };
+        root.querySelectorAll('.pt-go').forEach(btn => {
+          btn.addEventListener('click', () => transitionTo(true, btn.dataset.seat));
+        });
+        root.querySelector('.pt-back').addEventListener('click', () => transitionTo(false));
+      });
+    }
+
+    // Render Category Pills
+    function renderFilters() {
+      document.querySelectorAll('.level-pill').forEach(btn => {
+        const active = btn.dataset.level === state.level;
+        btn.className = `level-pill px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition ${
+          active
+            ? 'bg-teal-600 text-white'
+            : 'bg-[var(--card)] border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+        }`;
+      });
+
+      const catWrap = document.getElementById('categoryFilters');
+      catWrap.innerHTML = CATEGORIES.filter(c => c.id === 'all' || state.level === 'all' || c.level === state.level).map(c => {
+        const active = state.category === c.id;
+        return `<button data-cat="${c.id}" class="cat-pill shrink-0 px-3 py-1 rounded-lg text-xs font-medium cursor-pointer transition ${
+          active
+            ? 'bg-teal-500/15 text-teal-600 dark:text-teal-400 border border-teal-500/40 font-semibold'
+            : 'bg-[var(--card)] border border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+        }">${c.label}</button>`;
+      }).join('');
+
+      catWrap.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.category = btn.dataset.cat;
+          renderFilters();
+          renderCards();
+        });
+      });
+    }
+
+    // Render Motion Cards
+    function renderCards() {
+      const q = state.search.trim().toLowerCase();
+      const filtered = MOTIONS.filter(m => {
+        if (state.level !== 'all' && m.level !== state.level) return false;
+        if (state.category !== 'all' && m.category !== state.category) return false;
+        if (q) {
+          const hay = `${m.nameJa} ${m.nameEn} ${m.desc} ${m.prompt} ${m.categoryLabel} ${m.keywords.join(' ')}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById('resultCount').textContent = `${filtered.length}件の動きを表示中（全24件）`;
+      document.getElementById('selectedCountBadge').textContent = state.selectedIds.size;
+
+      const grid = document.getElementById('cardsGrid');
+      const empty = document.getElementById('emptyState');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(m => {
+        const isSel = state.selectedIds.has(m.id);
+        const levelBadge = m.level === 'basic'
+          ? '<span class="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">基本</span>'
+          : '<span class="px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-xs font-semibold">プロっぽい</span>';
+
+        return `
+          <article class="rounded-2xl bg-[var(--card)] border border-[var(--border)] p-4 flex flex-col gap-3 shadow-2xs hover:border-teal-500/40 transition">
+            <!-- Top meta -->
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5 min-w-0">
+                <span class="text-xs font-mono font-bold text-[var(--muted-foreground)]">#${String(m.id).padStart(2, '0')}</span>
+                ${levelBadge}
+                <span class="text-xs text-[var(--muted-foreground)] truncate">${m.categoryLabel}</span>
+              </div>
+              <button type="button" data-select-id="${m.id}"
+                class="select-toggle shrink-0 px-2.5 py-1 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+                  isSel
+                    ? 'bg-teal-600 text-white border-teal-600'
+                    : 'bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+                }">
+                ${isSel ? '✓ 選択中' : '+ 組み合わせ'}
+              </button>
+            </div>
+
+            <!-- Interactive Mini Demo -->
+            ${buildDemoHTML(m)}
+
+            <!-- Name & Description -->
+            <div>
+              <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <h3 class="text-base font-bold tracking-tight">${m.nameJa}</h3>
+                <button type="button" data-copy-term="${m.nameJa}（${m.nameEn}）" title="名称をコピー"
+                  class="copy-term text-xs font-mono font-semibold text-teal-600 dark:text-teal-400 hover:underline cursor-pointer">
+                  ${m.nameEn}
+                </button>
+              </div>
+              <p class="text-xs text-[var(--muted-foreground)] mt-0.5">${m.desc}</p>
+            </div>
+
+            <!-- Sample Prompt Box -->
+            <div class="mt-auto rounded-xl bg-[var(--background)] border border-[var(--border)] p-3 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold text-[var(--muted-foreground)]">AI向けサンプルプロンプト</span>
+              </div>
+              <p class="text-xs leading-relaxed text-[var(--foreground)]/90 line-clamp-3">${m.prompt}</p>
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" data-copy-prompt="${m.id}"
+                  class="copy-prompt-btn flex-1 py-1.5 px-3 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold transition cursor-pointer">
+                  プロンプトをコピー
+                </button>
+                <button type="button" data-detail-id="${m.id}"
+                  class="detail-btn py-1.5 px-3 rounded-lg border border-[var(--border)] bg-[var(--card)] hover:border-teal-500/50 text-xs font-semibold transition cursor-pointer">
+                  カスタマイズ
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      // Wire card action buttons
+      grid.querySelectorAll('.copy-term').forEach(btn => {
+        btn.addEventListener('click', () => copyText(btn.dataset.copyTerm, `「${btn.dataset.copyTerm}」をコピーしました`));
+      });
+      grid.querySelectorAll('.copy-prompt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const m = MOTIONS.find(x => x.id === Number(btn.dataset.copyPrompt));
+          if (m) copyText(m.prompt, `「${m.nameJa}」のプロンプトをコピーしました`);
+        });
+      });
+      grid.querySelectorAll('.detail-btn').forEach(btn => {
+        btn.addEventListener('click', () => openDetailModal(Number(btn.dataset.detailId)));
+      });
+      grid.querySelectorAll('.select-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = Number(btn.dataset.selectId);
+          if (state.selectedIds.has(id)) state.selectedIds.delete(id);
+          else state.selectedIds.add(id);
+          renderCards();
+        });
+      });
+
+      initDemos();
+    }
+
+    // Detail & Customizer Modal
+    function updateCustomPrompt() {
+      const m = MOTIONS.find(x => x.id === state.activeModalId);
+      if (!m) return;
+      const target = document.getElementById('customTargetInput').value.trim() || m.defaultTarget;
+      const stack = document.getElementById('customStackSelect').value;
+      const intensityMap = {
+        subtle: "動きは控えめで上品（移動量小さめ・短めのduration）にし、操作の邪魔をしないようにしてください。",
+        standard: "自然で心地よい速度とイージング（ease-out系）で実装してください。",
+        dynamic: "メリハリのあるリッチな演出（余韻のあるイージングや時間差）にして印象的に仕上げてください。"
+      };
+      const out = `【実装したい動き】${m.nameJa}（${m.nameEn}）\n【対象要素】${target}\n【使用技術】${stack}\n\n${m.prompt}\n${intensityMap[state.intensity]}\nまた、prefers-reduced-motion: reduce のユーザーには過度な動きを抑える配慮も入れてください。`;
+      document.getElementById('customPromptOutput').value = out;
+
+      document.querySelectorAll('.intensity-btn').forEach(b => {
+        const active = b.dataset.intensity === state.intensity;
+        b.className = `intensity-btn px-2.5 py-1 rounded-md text-xs font-semibold border cursor-pointer transition ${
+          active ? 'bg-teal-600 text-white border-teal-600' : 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]'
+        }`;
+      });
+    }
+
+    function openDetailModal(id) {
+      const m = MOTIONS.find(x => x.id === id);
+      if (!m) return;
+      state.activeModalId = id;
+      state.intensity = 'standard';
+      document.getElementById('modalNum').textContent = `#${String(m.id).padStart(2, '0')}`;
+      document.getElementById('modalTitle').textContent = m.nameJa;
+      document.getElementById('modalEn').textContent = m.nameEn;
+      document.getElementById('modalDesc').textContent = `${m.categoryLabel} — ${m.desc}`;
+      document.getElementById('customTargetInput').value = m.defaultTarget;
+      document.getElementById('modalTips').textContent = m.tips;
+      document.getElementById('modalKeywords').innerHTML = m.keywords.map(k =>
+        `<span class="px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-xs font-mono text-teal-600 dark:text-teal-400">${k}</span>`
+      ).join('');
+      updateCustomPrompt();
+
+      const modal = document.getElementById('detailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDetailModal() {
+      const modal = document.getElementById('detailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Combiner Modal
+    function updateCombinedPrompt() {
+      const chips = document.getElementById('selectedChips');
+      const selected = MOTIONS.filter(m => state.selectedIds.has(m.id));
+      if (selected.length === 0) {
+        chips.innerHTML = '<span class="text-xs text-[var(--muted-foreground)]">まだ動きが選択されていません。カードの「+ 組み合わせ」ボタンで追加してください。</span>';
+        document.getElementById('combinedPromptOutput').value = '';
+        return;
+      }
+      chips.innerHTML = selected.map(m => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-500/15 text-teal-700 dark:text-teal-300 text-xs font-semibold">
+          ${m.nameJa} (${m.nameEn})
+          <button type="button" data-remove-id="${m.id}" class="remove-chip hover:text-red-500 cursor-pointer">×</button>
+        </span>
+      `).join('');
+
+      chips.querySelectorAll('.remove-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.selectedIds.delete(Number(btn.dataset.removeId));
+          renderCards();
+          updateCombinedPrompt();
+        });
+      });
+
+      const theme = document.getElementById('siteThemeInput').value.trim() || "Webサイト";
+      const list = selected.map((m, i) => `${i + 1}. ${m.nameJa}（${m.nameEn}）\n   - ${m.prompt}`).join('\n\n');
+      document.getElementById('combinedPromptOutput').value =
+        `「${theme}」をHTML / CSS / JavaScriptで作成してください。\n以下のインタラクション・動きを違和感なく組み合わせて、モダンで触り心地の良いUIにしてください。\n\n${list}\n\n共通要件:\n- レスポンシブ対応（PC / スマホ）\n- 過度にならない上品なイージングと60fpsの滑らかな動作\n- prefers-reduced-motion への配慮`;
+    }
+
+    function openCombinerModal() {
+      updateCombinedPrompt();
+      const modal = document.getElementById('combinerModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCombinerModal() {
+      const modal = document.getElementById('combinerModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Event Listeners
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      state.search = e.target.value;
+      renderCards();
+    });
+
+    document.querySelectorAll('.level-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.level = btn.dataset.level;
+        state.category = 'all';
+        renderFilters();
+        renderCards();
+      });
+    });
+
+    document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+      state.search = '';
+      state.level = 'all';
+      state.category = 'all';
+      document.getElementById('searchInput').value = '';
+      renderFilters();
+      renderCards();
+    });
+
+    document.getElementById('closeDetailModal').addEventListener('click', closeDetailModal);
+    document.getElementById('detailModal').addEventListener('click', (e) => {
+      if (e.target.id === 'detailModal') closeDetailModal();
+    });
+    document.getElementById('customTargetInput').addEventListener('input', updateCustomPrompt);
+    document.getElementById('customStackSelect').addEventListener('change', updateCustomPrompt);
+    document.querySelectorAll('.intensity-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.intensity = btn.dataset.intensity;
+        updateCustomPrompt();
+      });
+    });
+    document.getElementById('copyCustomPromptBtn').addEventListener('click', () => {
+      copyText(document.getElementById('customPromptOutput').value, 'カスタムプロンプトをコピーしました！');
+    });
+
+    document.getElementById('openCombinerBtn').addEventListener('click', openCombinerModal);
+    document.getElementById('closeCombinerModal').addEventListener('click', closeCombinerModal);
+    document.getElementById('combinerModal').addEventListener('click', (e) => {
+      if (e.target.id === 'combinerModal') closeCombinerModal();
+    });
+    document.getElementById('siteThemeInput').addEventListener('input', updateCombinedPrompt);
+    document.getElementById('clearSelectionBtn').addEventListener('click', () => {
+      state.selectedIds.clear();
+      renderCards();
+      updateCombinedPrompt();
+    });
+    document.getElementById('copyCombinedBtn').addEventListener('click', () => {
+      const txt = document.getElementById('combinedPromptOutput').value;
+      if (!txt) return showToast('動きを1つ以上選択してください');
+      copyText(txt, '組み合わせプロンプトをコピーしました！');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDetailModal();
+        closeCombinerModal();
+      }
+    });
+
+    // Init
+    renderFilters();
+    renderCards();
   </script>
 </body>
 </html>
