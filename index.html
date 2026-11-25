@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biophilic Office — 3-Color SVG Line Drawing</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .c-ink   { stroke: #2A303C; }
+    .c-blue  { stroke: #2B5B8E; }
+    .c-green { stroke: #3D7A4A; }
+
+    svg#scene path,
+    svg#scene line,
+    svg#scene circle,
+    svg#scene ellipse,
+    svg#scene rect,
+    svg#scene polyline {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .w-bold { stroke-width: 2.2; }
+    .w-main { stroke-width: 1.7; }
+    .w-med  { stroke-width: 1.3; }
+    .w-thin { stroke-width: 0.95; }
+    .w-fine { stroke-width: 0.7; opacity: 0.72; }
+
+    svg#scene.filter-ink   .c-blue,
+    svg#scene.filter-ink   .c-green,
+    svg#scene.filter-blue  .c-ink,
+    svg#scene.filter-blue  .c-green,
+    svg#scene.filter-green .c-ink,
+    svg#scene.filter-green .c-blue {
+      opacity: 0.1 !important;
+      transition: opacity 0.25s ease;
+    }
+  </style>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-0 m-0">
+  <div class="w-full max-w-[600px] mx-auto py-1 space-y-2">
+    <div class="w-full aspect-[1024/683] rounded-lg overflow-hidden border border-[var(--card-border)] bg-[#FCFBF8]">
+      <svg id="scene" viewBox="0 0 1024 683" class="w-full h-full block" xmlns="http://www.w3.org/2000/svg" aria-label="オフィス空間の3色線画イラスト">
+        <!-- STAGE 1: 建築フレーム・窓 -->
+        <g data-stage="1" data-label="建築フレーム・窓">
+          <rect class="c-ink w-fine" x="2" y="2" width="1020" height="679" />
+          <path class="c-ink w-main" d="M 0,50 L 365,196" />
+          <path class="c-ink w-main" d="M 365,196 L 806,196" />
+          <path class="c-ink w-med"  d="M 365,342 L 806,342" />
+          <line class="c-ink w-med" x1="365" y1="196" x2="365" y2="342" />
+          <line class="c-ink w-med" x1="442" y1="196" x2="442" y2="342" />
+          <line class="c-ink w-med" x1="524" y1="196" x2="524" y2="294" />
+          <line class="c-ink w-med" x1="604" y1="196" x2="604" y2="294" />
+          <line class="c-ink w-med" x1="684" y1="196" x2="684" y2="342" />
+          <line class="c-ink w-med" x1="764" y1="196" x2="764" y2="294" />
+          <line class="c-ink w-fine" x1="365" y1="216" x2="806" y2="216" />
+          <line class="c-ink w-fine" x1="365" y1="236" x2="806" y2="236" />
+          <line class="c-ink w-fine" x1="365" y1="256" x2="806" y2="256" />
+          <line class="c-ink w-fine" x1="365" y1="276" x2="806" y2="276" />
+          <line class="c-ink w-fine" x1="365" y1="296" x2="482" y2="296" />
+          <line class="c-ink w-fine" x1="365" y1="318" x2="482" y2="318" />
+          <path class="c-ink w-bold" d="M 806,174 L 806,440" />
+          <path class="c-ink w-main" d="M 806,174 L 876,158 L 1024,158" />
+          <path class="c-ink w-med"  d="M 876,158 L 876,412" />
+          <ellipse class="c-ink w-med" cx="834" cy="217" rx="8.5" ry="16" />
+          <path class="c-ink w-thin" d="M 834,217 L 834,207 M 834,217 L 839,221" />
+          <path class="c-ink w-thin" d="M 912,338 L 912,214 L 1000,214 L 1000,338" />
+          <line class="c-ink w-fine" x1="715" y1="0" x2="578" y2="196" />
+          <line class="c-ink w-fine" x1="895" y1="0" x2="645" y2="196" />
+          <line class="c-ink w-fine" x1="1024" y1="52" x2="725" y2="196" />
+          <line class="c-ink w-fine" x1="642" y1="65" x2="1024" y2="65" />
+          <line class="c-ink w-fine" x1="598" y1="108" x2="1024" y2="108" />
+          <line class="c-ink w-fine" x1="520" y1="146" x2="910" y2="146" />
+          <path class="c-ink w-thin" d="M 568,98 L 682,98 L 664,116 L 558,116 Z" />
+          <path class="c-ink w-thin" d="M 544,148 L 622,148 L 608,159 L 538,159 Z" />
+          <path class="c-ink w-thin" d="M 896,105 L 1006,105 L 992,116 L 886,116 Z" />
+          <path class="c-ink w-thin" d="M 218,104 L 336,104 L 348,116 L 234,116 Z" />
+        </g>
+
+        <!-- STAGE 2: 青い波の天井 -->
+        <g data-stage="2" data-label="青い波の天井">
+          <path class="c-blue w-bold" d="M 630,0 C 658,48 640,94 568,122 C 492,149 456,162 490,176 C 530,192 675,193 806,192" />
+          <path class="c-blue w-thin" d="M 624,0 C 651,46 633,90 562,117 C 484,145 446,161 482,178 C 524,195 668,196 806,195" />
+          <path class="c-blue w-main" d="M 0,48 L 365,194 L 806,194" />
+          <line class="c-blue w-med"  x1="15"  y1="0" x2="395" y2="194" />
+          <line class="c-blue w-med"  x1="215" y1="0" x2="438" y2="194" />
+          <line class="c-blue w-med"  x1="414" y1="0" x2="482" y2="194" />
+          <line class="c-blue w-med"  x1="608" y1="0" x2="554" y2="127" />
+          <line class="c-blue w-thin" x1="0"   y1="16"  x2="637" y2="16" />
+          <line class="c-blue w-thin" x1="42"  y1="64"  x2="640" y2="64" />
+          <line class="c-blue w-thin" x1="138" y1="103" x2="606" y2="103" />
+          <line class="c-blue w-thin" x1="216" y1="133" x2="538" y2="133" />
+          <line class="c-blue w-thin" x1="274" y1="157" x2="474" y2="157" />
+          <line class="c-blue w-thin" x1="322" y1="176" x2="488" y2="176" />
+        </g>
+
+        <!-- STAGE 3: 集中ブース・床の曲線 -->
+        <g data-stage="3" data-label="集中ブース・床の曲線">
+          <path class="c-blue w-main" d="M 484,380 L 484,296 C 484,295 486,294 490,294 L 534,294 C 548,294 556,304 556,318 L 556,414 L 494,414" />
+          <path class="c-blue w-thin" d="M 484,300 L 530,300 C 542,300 549,308 549,320 L 549,414" />
+          <line class="c-blue w-thin" x1="510" y1="300" x2="510" y2="380" />
+          <path class="c-blue w-main" d="M 604,294 L 660,294 C 676,294 686,304 686,320 L 686,338" />
+          <path class="c-blue w-thin" d="M 604,300 L 656,300 C 670,300 679,308 679,322 L 679,338" />
+          <path class="c-blue w-main" d="M 722,340 L 722,294 L 806,294" />
+          <path class="c-blue w-main" d="M 722,300 L 756,300 L 756,412 L 732,412" />
+          <line class="c-blue w-thin" x1="756" y1="300" x2="806" y2="300" />
+          <path class="c-blue w-med"  d="M 484,522 C 542,562 595,612 634,683" />
+          <path class="c-blue w-fine" d="M 526,442 C 538,496 588,538 648,568" />
+          <path class="c-blue w-fine" d="M 744,548 C 778,595 802,642 818,683" />
+        </g>
+
+        <!-- STAGE 4: 曲面カウンター・家具 -->
+        <g data-stage="4" data-label="曲面カウンター・家具">
+          <path class="c-ink w-bold" d="M 0,668 C 185,634 395,574 464,504 C 504,464 504,428 456,404" />
+          <path class="c-ink w-main" d="M 0,679 C 188,646 398,586 468,515 C 501,481 504,452 490,432" />
+          <path class="c-ink w-med"  d="M 352,412 C 378,404 404,400 425,400" />
+          <path class="c-ink w-fine" d="M 28,625 C 195,595 365,542 435,482" />
+          <path class="c-ink w-fine" d="M 105,576 C 245,546 368,498 412,452" />
+          <path class="c-ink w-med"  d="M 258,618 L 246,683" />
+          <path class="c-ink w-med"  d="M 352,585 L 352,683" />
+          <path class="c-ink w-med"  d="M 432,542 L 432,612" />
+          <path class="c-ink w-bold" d="M 0,532 C 138,520 284,488 340,452 C 362,438 362,422 346,408" />
+          <path class="c-ink w-main" d="M 0,562 C 144,548 290,514 346,476 C 361,465 361,452 357,438" />
+          <rect class="c-ink w-thin" x="12" y="538" width="46" height="14" rx="2" />
+          <path class="c-ink w-thin" d="M 294,482 L 318,472 L 318,482 L 294,492 Z" />
+          <path class="c-ink w-med"  d="M 288,362 C 338,354 378,342 388,332" />
+          <path class="c-ink w-med"  d="M 296,380 C 344,370 382,356 392,344" />
+          <path class="c-ink w-med"  d="M 308,396 C 352,386 385,372 394,360" />
+          <path class="c-ink w-thin" d="M 326,410 C 362,400 388,388 395,376" />
+          <path class="c-ink w-med"  d="M 388,332 C 394,344 396,364 394,380" />
+          <path class="c-ink w-med"  d="M 450,348 C 438,346 410,347 404,353 C 400,358 426,361 446,359" />
+          <line class="c-ink w-med"  x1="432" y1="360" x2="432" y2="394" />
+          <ellipse class="c-ink w-bold" cx="450" cy="612" rx="46" ry="20" />
+          <path class="c-ink w-bold" d="M 456,593 C 482,586 502,574 508,560 C 512,554 506,554 498,562 C 482,576 468,596 462,625" />
+          <line class="c-ink w-bold" x1="406" y1="618" x2="395" y2="683" />
+          <line class="c-ink w-bold" x1="462" y1="632" x2="458" y2="683" />
+          <line class="c-ink w-bold" x1="494" y1="618" x2="504" y2="683" />
+          <line class="c-ink w-med"  x1="418" y1="634" x2="414" y2="683" />
+          <path class="c-ink w-main" d="M 476,496 C 492,502 518,500 526,490 C 530,484 520,478 504,478" />
+          <path class="c-ink w-main" d="M 505,478 C 508,464 514,452 522,452 C 530,452 532,464 526,486" />
+          <line class="c-ink w-main" x1="518" y1="496" x2="529" y2="632" />
+          <line class="c-ink w-main" x1="494" y1="500" x2="496" y2="622" />
+          <path class="c-ink w-med"  d="M 476,586 C 494,592 516,590 526,582" />
+        </g>
+
+        <!-- STAGE 5: スタンディングデスク・右デスク -->
+        <g data-stage="5" data-label="スタンディング・右デスク">
+          <ellipse class="c-ink w-bold" cx="669" cy="350" rx="79" ry="13.5" />
+          <path class="c-ink w-med"  d="M 590,350 L 590,356 C 590,363 626,368 669,368 C 712,368 748,363 748,356 L 748,350" />
+          <path class="c-ink w-main" d="M 610,364 L 610,472 L 626,486 L 672,486" />
+          <line class="c-ink w-med"  x1="626" y1="366" x2="626" y2="486" />
+          <line class="c-ink w-med"  x1="734" y1="362" x2="734" y2="442" />
+          <path class="c-ink w-bold" d="M 1024,606 C 920,572 798,530 755,496 C 734,478 742,458 784,445 C 808,438 830,436 852,438" />
+          <path class="c-ink w-main" d="M 1024,616 C 918,582 796,539 754,504 C 742,494 740,484 744,476" />
+          <path class="c-ink w-fine" d="M 1010,572 C 915,542 820,506 785,480" />
+          <path class="c-ink w-med"  d="M 858,554 L 858,596 L 882,604" />
+          <path class="c-ink w-med"  d="M 885,568 L 885,642 L 908,664 L 948,664 L 948,592" />
+          <line class="c-ink w-med"  x1="908" y1="576" x2="908" y2="664" />
+          <path class="c-ink w-main" d="M 884,484 C 918,506 968,522 1024,530" />
+          <path class="c-ink w-med"  d="M 884,484 L 884,496 C 918,518 968,534 1024,542" />
+          <path class="c-ink w-bold" d="M 842,380 L 892,404 L 892,468 L 842,436 Z" />
+          <path class="c-ink w-med"  d="M 862,450 L 868,488" />
+          <ellipse class="c-ink w-med" cx="866" cy="490" rx="14" ry="4" />
+          <path class="c-ink w-bold" d="M 952,414 L 1024,418 L 1024,488 L 952,482 Z" />
+          <path class="c-ink w-main" d="M 952,482 L 948,494 L 990,536" />
+          <ellipse class="c-ink w-med" cx="990" cy="538" rx="14" ry="4" />
+          <path class="c-ink w-med"  d="M 760,446 L 754,404 C 753,394 768,388 784,390 C 800,392 808,398 806,412 L 802,442" />
+          <path class="c-ink w-thin" d="M 756,396 C 750,382 770,376 788,378 C 804,380 812,388 808,398" />
+          <path class="c-ink w-bold" d="M 1024,544 L 996,544 C 988,544 988,554 990,568 L 1004,648 L 1024,648" />
+          <path class="c-ink w-main" d="M 998,552 L 1024,552" />
+          <path class="c-ink w-main" d="M 996,626 L 966,608 C 958,604 952,610 956,618 L 982,648 L 992,683" />
+        </g>
+
+        <!-- STAGE 6: ペンダントライト -->
+        <g data-stage="6" data-label="ペンダントライト">
+          <path class="c-ink w-bold" d="M 69,18 L 93,18 L 91,54 L 71,54 Z" />
+          <line class="c-ink w-main" x1="81" y1="54" x2="81" y2="233" />
+          <path class="c-ink w-med"  d="M 75,233 L 87,233 L 91,240 L 71,240 Z" />
+          <circle class="c-ink w-bold" cx="81" cy="274" r="38" />
+          <ellipse class="c-ink w-med" cx="81" cy="274" rx="40" ry="6" />
+          <ellipse class="c-ink w-thin" cx="81" cy="274" rx="16" ry="38" />
+          <circle class="c-ink w-thin" cx="81" cy="264" r="8" />
+          <circle class="c-ink w-thin" cx="81" cy="285" r="7" />
+          <path class="c-ink w-main" d="M 225,44 L 245,44 L 243,76 L 227,76 Z" />
+          <line class="c-ink w-med"  x1="235" y1="76" x2="235" y2="237" />
+          <path class="c-ink w-med"  d="M 230,237 L 240,237 L 243,243 L 227,243 Z" />
+          <circle class="c-ink w-main" cx="235" cy="271" r="32" />
+          <ellipse class="c-ink w-med" cx="235" cy="271" rx="34" ry="5" />
+          <ellipse class="c-ink w-thin" cx="235" cy="271" rx="13" ry="32" />
+          <circle class="c-ink w-thin" cx="235" cy="263" r="6.5" />
+          <circle class="c-ink w-thin" cx="235" cy="281" r="6" />
+          <path class="c-ink w-med"  d="M 323,74 L 339,74 L 337,100 L 325,100 Z" />
+          <line class="c-ink w-med"  x1="331" y1="100" x2="331" y2="238" />
+          <circle class="c-ink w-main" cx="331" cy="266" r="26" />
+          <ellipse class="c-ink w-thin" cx="331" cy="266" rx="28" ry="4.5" />
+          <ellipse class="c-ink w-thin" cx="331" cy="266" rx="10" ry="26" />
+          <path class="c-ink w-med"  d="M 343,98 L 355,98 L 354,120 L 344,120 Z" />
+          <line class="c-ink w-thin" x1="349" y1="120" x2="349" y2="242" />
+          <path class="c-ink w-med"  d="M 353,246 A 21,21 0 1,1 353,284" />
+          <line class="c-ink w-thin" x1="355" y1="265" x2="372" y2="265" />
+        </g>
+
+        <!-- STAGE 7: バイオフィリック植物 -->
+        <g data-stage="7" data-label="バイオフィリック植物">
+          <path class="c-green w-main" d="M 118,412 C 98,324 56,258 0,218" />
+          <path class="c-green w-med"  d="M 98,354 C 74,344 50,348 28,362 M 84,318 C 58,308 34,312 12,324 M 66,286 C 42,274 20,276 2,288 M 44,256 C 24,244 10,244 0,250" />
+          <path class="c-green w-med"  d="M 102,340 C 118,320 132,302 142,284 M 88,304 C 102,282 114,262 120,242 M 70,272 C 82,250 90,232 94,212 M 48,242 C 56,222 60,204 62,188" />
+          <path class="c-green w-main" d="M 130,418 C 142,320 162,245 198,176" />
+          <path class="c-green w-med"  d="M 148,332 C 122,314 102,292 86,268 M 160,286 C 138,266 122,244 110,218 M 176,240 C 156,222 144,202 136,182" />
+          <path class="c-green w-med"  d="M 152,324 C 178,308 202,292 224,274 M 166,278 C 192,260 214,244 238,224 M 182,232 C 206,216 226,204 252,194" />
+          <path class="c-green w-med"  d="M 198,176 C 192,164 200,156 206,168 C 216,162 222,172 208,180" />
+          <path class="c-green w-med"  d="M 136,182 C 126,174 130,164 140,172 C 148,166 154,174 142,184" />
+          <path class="c-green w-med"  d="M 252,194 C 264,186 270,194 258,204 C 266,210 258,218 248,208" />
+          <path class="c-green w-thin" d="M 110,218 C 100,208 106,198 116,208 M 224,274 C 236,264 244,270 232,282" />
+          <path class="c-green w-bold" d="M 24,522 C 20,470 50,420 94,394 C 104,436 84,488 46,520 Z" />
+          <path class="c-green w-thin" d="M 38,518 C 52,474 72,438 92,400" />
+          <path class="c-green w-bold" d="M 96,512 C 106,460 132,418 164,392 C 172,436 154,480 124,510 Z" />
+          <path class="c-green w-thin" d="M 110,508 C 126,464 144,428 162,398" />
+          <path class="c-green w-med"  d="M 62,482 C 54,442 66,406 88,382 M 138,478 C 144,442 158,412 178,388" />
+          <path class="c-green w-main" d="M 0,432 C 18,412 36,374 28,354 C 14,344 0,362 0,392" />
+          <path class="c-green w-thin" d="M 4,404 L 22,392 M 6,386 L 24,374 M 8,370 L 22,362" />
+          <path class="c-green w-main" d="M 172,494 C 204,458 240,424 276,396" />
+          <path class="c-green w-med"  d="M 196,472 C 194,448 202,428 214,412 M 224,448 C 226,426 236,408 248,392 M 248,426 C 254,406 266,392 278,380" />
+          <path class="c-green w-med"  d="M 202,470 C 226,466 248,460 270,450 M 232,444 C 256,438 278,430 298,418" />
+          <path class="c-green w-main" d="M 232,374 C 224,338 242,306 270,298 C 282,326 270,358 246,376 Z" />
+          <path class="c-green w-thin" d="M 240,372 C 252,344 262,322 268,304" />
+          <path class="c-green w-main" d="M 274,458 C 304,442 332,418 342,396 C 320,390 292,406 272,434 Z" />
+          <path class="c-green w-thin" d="M 278,452 C 302,436 322,418 336,400" />
+          <path class="c-green w-med"  d="M 152,442 C 166,412 184,386 204,368 M 176,434 C 192,406 212,384 232,370" />
+          <path class="c-green w-med"  d="M 6,518 C 20,502 42,504 58,518 C 78,496 106,496 128,506 C 154,484 186,478 216,486 C 244,462 280,456 312,456 C 334,438 352,422 346,402" />
+          <path class="c-green w-main" d="M 276,348 C 296,326 322,308 350,292 C 368,282 384,274 394,260" />
+          <path class="c-green w-med"  d="M 284,344 C 282,320 294,298 310,282 M 316,334 C 320,308 334,284 352,266 M 346,324 C 354,298 368,274 384,254" />
+          <path class="c-green w-med"  d="M 282,348 C 316,340 356,328 386,314" />
+          <path class="c-green w-main" d="M 946,488 C 942,410 946,332 940,256 C 938,236 936,218 934,204" />
+          <path class="c-green w-main" d="M 944,442 C 918,396 894,352 868,312" />
+          <path class="c-green w-main" d="M 944,398 C 966,356 992,318 1020,286" />
+          <path class="c-green w-med"  d="M 942,320 C 906,294 872,272 838,256" />
+          <path class="c-green w-med"  d="M 942,282 C 964,258 986,238 1012,224" />
+          <path class="c-green w-med"  d="M 886,478 C 874,450 886,422 912,412 C 924,436 916,466 896,482 Z" />
+          <path class="c-green w-thin" d="M 894,476 C 900,454 906,434 912,416" />
+          <path class="c-green w-med"  d="M 918,452 C 900,420 912,386 942,378 C 958,404 948,438 926,456 Z" />
+          <path class="c-green w-thin" d="M 924,450 C 932,424 938,400 942,382" />
+          <path class="c-green w-med"  d="M 956,426 C 962,394 988,374 1016,378 C 1016,406 996,428 968,432 Z" />
+          <path class="c-green w-thin" d="M 964,426 C 982,408 998,394 1012,382" />
+          <path class="c-green w-med"  d="M 874,368 C 858,346 870,324 894,322 C 906,342 896,364 878,372 Z" />
+          <path class="c-green w-med"  d="M 914,344 C 904,318 920,296 946,298 C 956,320 942,342 920,348 Z" />
+          <path class="c-green w-med"  d="M 962,332 C 974,306 998,296 1020,308 C 1012,332 990,342 968,338 Z" />
+          <path class="c-green w-thin" d="M 846,260 C 836,250 848,242 862,254 M 880,262 C 874,248 890,244 900,258 M 914,238 C 908,224 924,218 932,234 M 946,216 C 944,202 958,202 960,218 M 976,246 C 978,232 994,232 992,248" />
+          <path class="c-green w-thin" d="M 896,296 C 884,284 898,274 912,286 M 956,268 C 966,254 982,254 982,270 M 856,304 C 844,294 854,284 868,294" />
+          <path class="c-green w-med"  d="M 888,480 C 908,468 934,474 952,492 C 976,482 1002,488 1022,506" />
+        </g>
+
+        <!-- STAGE 8: 働く人々 -->
+        <g data-stage="8" data-label="働く人々">
+          <path class="c-ink w-bold" d="M 378,400 L 418,415 L 424,438 L 385,425 Z" />
+          <path class="c-ink w-main" d="M 424,438 L 456,431 L 444,424" />
+          <path class="c-ink w-bold" d="M 454,344 C 454,328 466,320 478,324 C 488,328 492,342 490,364 C 488,378 486,390 482,398" />
+          <path class="c-ink w-main" d="M 454,344 C 452,360 454,376 462,384 C 470,384 476,374 476,360" />
+          <path class="c-ink w-thin" d="M 482,334 C 484,352 482,374 476,392" />
+          <path class="c-ink w-bold" d="M 452,374 C 440,384 432,398 424,414 L 434,420" />
+          <path class="c-ink w-bold" d="M 488,374 C 498,382 504,398 498,424 C 492,438 474,434 452,428 L 436,422" />
+          <path class="c-ink w-thin" d="M 462,384 L 470,404 L 480,384" />
+          <path class="c-ink w-med"  d="M 498,424 L 498,452" />
+          <path class="c-ink w-med"  d="M 464,518 L 460,578 M 482,504 L 478,574" />
+          <path class="c-ink w-bold" d="M 584,294 C 584,282 596,278 602,286 C 606,292 604,304 596,306 C 588,306 584,300 584,294 Z" />
+          <path class="c-ink w-bold" d="M 584,306 C 574,310 572,324 574,346 L 574,374 L 604,374 L 604,342" />
+          <path class="c-ink w-main" d="M 582,322 C 594,332 610,336 626,336" />
+          <path class="c-ink w-bold" d="M 622,342 L 642,342 L 654,324" />
+          <path class="c-ink w-bold" d="M 576,374 L 574,446 L 588,448 L 592,402 L 596,442 L 608,442 L 604,374" />
+          <path class="c-ink w-main" d="M 574,446 C 572,454 584,458 594,456 M 596,442 C 598,449 608,452 614,448" />
+          <path class="c-ink w-bold" d="M 634,424 C 632,412 644,410 652,424 C 660,446 664,484 662,516 L 648,516 C 646,486 642,452 634,424 Z" />
+          <path class="c-ink w-med"  d="M 634,424 C 624,418 620,406 628,402 C 636,398 642,408 644,416" />
+          <path class="c-ink w-bold" d="M 648,504 L 692,504 C 698,504 698,510 690,512 L 656,512" />
+          <path class="c-ink w-bold" d="M 652,534 L 728,546" />
+          <path class="c-ink w-main" d="M 684,544 L 684,580" />
+          <path class="c-ink w-bold" d="M 684,578 L 626,590 M 684,578 L 664,606 M 684,578 L 716,600 M 684,578 L 728,578" />
+          <circle class="c-ink w-med" cx="626" cy="596" r="4.5" />
+          <circle class="c-ink w-med" cx="664" cy="612" r="4.5" />
+          <circle class="c-ink w-med" cx="716" cy="606" r="4.5" />
+          <path class="c-ink w-bold" d="M 702,404 C 700,384 716,374 730,382 C 740,388 740,404 734,416 C 728,424 718,426 710,422" />
+          <path class="c-ink w-med"  d="M 722,398 L 737,398" />
+          <path class="c-ink w-bold" d="M 706,414 C 684,422 668,444 666,478 C 665,500 672,516 688,524 L 748,528" />
+          <path class="c-ink w-bold" d="M 718,422 C 726,442 730,456 746,464 L 774,470" />
+          <path class="c-ink w-main" d="M 690,456 C 704,474 720,484 744,484 L 768,484" />
+          <path class="c-ink w-thin" d="M 710,424 L 724,462" />
+          <path class="c-ink w-bold" d="M 756,492 L 796,498 L 808,456" />
+          <path class="c-ink w-med"  d="M 756,492 L 772,478 L 798,484" />
+          <path class="c-ink w-bold" d="M 748,512 C 768,518 776,530 770,554 L 752,606 L 722,604 L 738,548 L 692,538" />
+          <path class="c-ink w-bold" d="M 722,604 C 718,616 742,626 766,630 C 774,630 776,622 764,614 L 752,606" />
+          <path class="c-ink w-med"  d="M 754,592 C 766,598 778,602 786,600" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+      <div class="flex items-center gap-1.5">
+        <button id="btnReplay" class="px-2.5 py-1 rounded bg-[#2B5B8E] text-white font-medium hover:opacity-90 transition cursor-pointer">もう一度描く</button>
+        <button id="btnPause" class="px-2 py-1 rounded border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:opacity-85 transition cursor-pointer">一時停止</button>
+        <button id="btnInstant" class="px-2 py-1 rounded border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:opacity-85 transition cursor-pointer">完成</button>
+      </div>
+
+      <div class="flex items-center gap-2 text-[var(--muted-foreground)]">
+        <div class="w-16 h-1.5 rounded-full bg-[var(--border)] overflow-hidden">
+          <div id="progressFill" class="h-full w-0 bg-[#2B5B8E]"></div>
+        </div>
+        <span id="stageLabel" class="min-w-[110px]">準備中...</span>
+      </div>
+
+      <div class="flex items-center gap-1.5" title="クリックで色ごとに強調表示">
+        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="ink"><span class="w-2 h-2 rounded-full bg-[#2A303C]"></span>墨</button>
+        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="blue"><span class="w-2 h-2 rounded-full bg-[#2B5B8E]"></span>青</button>
+        <button class="swatch inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] cursor-pointer" data-filter="green"><span class="w-2 h-2 rounded-full bg-[#3D7A4A]"></span>緑</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const svg = document.getElementById('scene');
+      const stageGroups = Array.from(svg.querySelectorAll('g[data-stage]'));
+      const btnReplay = document.getElementById('btnReplay');
+      const btnPause = document.getElementById('btnPause');
+      const btnInstant = document.getElementById('btnInstant');
+      const stageLabel = document.getElementById('stageLabel');
+      const progressFill = document.getElementById('progressFill');
+      const swatches = Array.from(document.querySelectorAll('.swatch'));
+
+      let isPaused = false;
+      let animStartTime = 0;
+      let elapsedBeforePause = 0;
+      let totalDuration = 0;
+      let rafId = null;
+      let items = [];
+
+      function buildTimeline() {
+        items = [];
+        let cursor = 0.15;
+        stageGroups.forEach((group) => {
+          const label = group.getAttribute('data-label') || '';
+          const shapes = Array.from(group.querySelectorAll('path, line, circle, ellipse, rect, polyline'));
+          const stageStart = cursor;
+          let stageEnd = stageStart;
+
+          shapes.forEach((el, idx) => {
+            let len = 100;
+            try { len = el.getTotalLength() || 100; } catch (_) {}
+            const dur = Math.max(0.28, Math.min(1.25, len / 420));
+            const stagger = Math.min(0.065, 0.85 / Math.max(shapes.length, 1));
+            const start = stageStart + idx * stagger;
+            const end = start + dur;
+            if (end > stageEnd) stageEnd = end;
+
+            el.style.strokeDasharray = `${len.toFixed(2)} ${len.toFixed(2)}`;
+            el.style.strokeDashoffset = `${len.toFixed(2)}`;
+            el.style.visibility = 'hidden';
+
+            items.push({ el, len, start, dur, end, label });
+          });
+
+          cursor = Math.max(stageStart + 0.55, stageEnd - 0.35);
+        });
+        totalDuration = items.reduce((m, it) => Math.max(m, it.end), 1);
+      }
+
+      function ease(t) {
+        return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      }
+
+      function renderAt(tSec) {
+        let activeLabel = '描画完了';
+        for (let i = 0; i < items.length; i++) {
+          const it = items[i];
+          if (tSec <= it.start) {
+            it.el.style.strokeDashoffset = it.len.toFixed(2);
+            it.el.style.visibility = 'hidden';
+          } else if (tSec >= it.end) {
+            it.el.style.strokeDashoffset = '0';
+            it.el.style.visibility = 'visible';
+          } else {
+            const p = ease((tSec - it.start) / it.dur);
+            it.el.style.strokeDashoffset = (it.len * (1 - p)).toFixed(2);
+            it.el.style.visibility = 'visible';
+            activeLabel = it.label;
+          }
+        }
+        const pct = Math.min(100, (tSec / totalDuration) * 100);
+        progressFill.style.width = `${pct.toFixed(1)}%`;
+        stageLabel.textContent = pct >= 100 ? '描画完了' : activeLabel;
+      }
+
+      function tick(now) {
+        if (isPaused) return;
+        const tSec = elapsedBeforePause + (now - animStartTime) / 1000;
+        renderAt(tSec);
+        if (tSec < totalDuration) {
+          rafId = requestAnimationFrame(tick);
+        } else {
+          rafId = null;
+          elapsedBeforePause = totalDuration;
+          btnPause.textContent = '一時停止';
+        }
+      }
+
+      function startAnimation() {
+        if (rafId) cancelAnimationFrame(rafId);
+        isPaused = false;
+        elapsedBeforePause = 0;
+        btnPause.textContent = '一時停止';
+        renderAt(0);
+        animStartTime = performance.now();
+        rafId = requestAnimationFrame(tick);
+      }
+
+      btnReplay.addEventListener('click', startAnimation);
+      btnPause.addEventListener('click', () => {
+        if (elapsedBeforePause >= totalDuration && !rafId) {
+          startAnimation();
+          return;
+        }
+        if (!isPaused) {
+          isPaused = true;
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          elapsedBeforePause += (performance.now() - animStartTime) / 1000;
+          btnPause.textContent = '再開';
+        } else {
+          isPaused = false;
+          btnPause.textContent = '一時停止';
+          animStartTime = performance.now();
+          rafId = requestAnimationFrame(tick);
+        }
+      });
+      btnInstant.addEventListener('click', () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+        isPaused = false;
+        elapsedBeforePause = totalDuration;
+        renderAt(totalDuration);
+      });
+
+      let activeFilter = null;
+      swatches.forEach((sw) => {
+        sw.addEventListener('click', () => {
+          const f = sw.dataset.filter;
+          svg.classList.remove('filter-ink', 'filter-blue', 'filter-green');
+          if (activeFilter === f) {
+            activeFilter = null;
+            swatches.forEach((s) => s.classList.remove('ring-1', 'ring-[var(--foreground)]'));
+          } else {
+            activeFilter = f;
+            svg.classList.add(`filter-${f}`);
+            swatches.forEach((s) => s.classList.toggle('ring-1', s === sw));
+            swatches.forEach((s) => s.classList.toggle('ring-[var(--foreground)]', s === sw));
+          }
+        });
+      });
+
+      buildTimeline();
+      startAnimation();
+    })();
+  </script>
+</body>
+</html>
